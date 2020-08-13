@@ -1,16 +1,15 @@
 ---
 name: Literature Review
 about: Add a paper or articale that needs to be read and reviewed
-title: "[REVIEW]"
+title: "[REVIEW] [PAPER NAME HERE]"
 labels: litrature
 assignees: ''
 
 ---
 
 ### Paper Details
-Name:
-Link:
-Date:
-Topic:
+**Link**:
+**Date**:
+**Topic**:
 
-*The written review is available [here](link to file in the repository)
+*The written review is available [here](link to file in the repository)*
