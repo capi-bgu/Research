@@ -1,0 +1,100 @@
+\documentclass{article}
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{subfiles}
+
+\title{CAPI \\ Literature Review}
+
+
+\author{
+  Shoham Zarfti \\
+  Department of Software and Information Systems \\
+  Ben-Gurion University \\
+   \And
+ Yuval khoramian \\
+  Department of Software and Information Systems\\
+  Ben-Gurion University \\
+  \And
+ Hod Twito \\
+  Department of Software and Information Systems\\
+  Ben-Gurion University \\
+  \And
+ Ron Ziedman \\
+  Department of Software and Information Systems\\
+  Ben-Gurion University \\
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Fill in executive summary when we are done with the reset of the review.
+\end{abstract}
+
+
+% keywords can be removed
+%\keywords{First keyword \and Second keyword \and More}
+
+\section{Project Background}
+Our project exists on the intersections between psychology and machine learning, as such we explore in this section three fields, psychology, classical machine learning, and computer vision.
+
+\subsection{Psychology}
+\subfile{sections/psychology}
+
+
+\subsection{Classical Machine Learning}
+\subfile{sections/classical_ml}
+
+
+\subsection{Computer Vision}
+\subfile{sections/computer_vision}
+
+
+\section{Related Work}
+In this section we dive deeper to into similar work done in this field.
+
+\subsection{Facial Expression Recognition}
+\subfile{sections/facial_expression_recognition}
+
+\subsection{Emotion Recognition Using Keyboard and Mouse}
+\subfile{sections/emotion_recognition_keyboard_mouse}
+
+
+\subsection{Similar Systems}
+\subfile{sections/similar_systems}
+
+
+\section{Research Plan}
+\subfile{sections/research_plan}
+
+
+
+\bibliographystyle{unsrt}  
+\bibliography{references.bib}
+
+\end{document}
