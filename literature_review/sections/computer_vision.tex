@@ -1,5 +1,66 @@
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
-Computer Vision Here.
+The field of computer vision has undergone a massive change in the last few years, from using hand-engineered features like brightness, color change, edges, etc.
+to using learned features. Though neural networks existed before, they are a very generic representation of learning and can be very hard to meaningfully construct to solve a specific problem.
+The Big innovation that led to the computer vision revolution was the Convolution Layer \cite{originalcnn}, Convolution Layers can be thought of as automatic feature extractors.
+they use the fact that images have structured 2D and learn features by convolving filters of various sizes over the input image. The learnable parameters are the weights of those
+filters which determine what parts of the image are important to the model and how they relate.
+\par
+
+Though these ideas existed for a while, it would take time for computational power to catch up, as training these models requires a lot of it.
+Many consider the turning point to be AlexNet \cite{alexnet}, AlexNet achieved very impressive results, winning the 2012 ImageNet competition using a model that combines the Convolution layers,
+with two fully connected layers at the end that produce the classification from the features learned by the convolutions.
+AlexNet approach to training the network on multiple GPUs allowed it to be very deep, for the time, and include many trainable parameters.
+AlexNet proved that there is room to grow in the field of computer vision using the convolutional architecture.
+\par
+
+In the following years, both innovations in the design of convolutional networks and the rapid increase in computational power allowed for more complex and more accurate models.
+One of the first major improvements upon AlexNet was VGG \cite{vgg}. In the paper, the authors try to fix many of the parameters controlling the model architecture and trying to increase the depth of the model.
+The success of VGG is a testament to the importance of the model depth.
+Another very important aspect of \cite{vgg} is the ability of VGG to adapt to different tasks relatively easily and yet achieving, state of the art results in all tasks.
+VGG proved how powerful the CNN architecture can be both in its ability to do well on difficult tasks like ImageNet classification,
+and the ability of models using this architecture to be adapted for different use cases just by changing the last layers of the network.
+\par
+
+Another successful approach to improving upon AlexNet Success was GoogLeNet and the Inception architecture introduced in \cite{inception}.
+The success of the Inception architecture stems from the careful design of the layers and blocks of the network to allow for both increased size and width compared to older models.
+Inception models are constructed from smaller operations called blocks, each block applies multiple convolutions on the data and then concatenates the results.
+This is made possible due to the use of 1x1 convolutions that serve as dimensionality reduction layers before convolutions with larger filters.
+This allows the models to be optimized in terms of both depth and width.
+Later incarnations of the Inception architecture \cite{inceptionv2-3}, were able to make additional improvements increasing both depth and width.
+In the paper, the authors provide guidelines for optimizing model performance while minimizing the number of parameters added.
+The main improvement that allowed for deeper and wider networks was splitting the convulsions into smaller ones that have the same receptive field but fewer parameters.
+\par
+
+Much of the research in computer vision focused on trying to construct deeper and deeper networks due to how important depth proved to be to the model's performance.
+But it turns out that deep models have more disadvantages than just being harder to train. Deeper models cause a problem known as vanishing gradients,
+where the gradients propagating through the network in training become smaller and smaller the deeper the network is.
+To solve this problem \cite{resnet} proposes a novel way to construct the neural network. 
+In the paper the authors argue that a network given a network $S$ with depth $S_d$ any network $S'$ with depth $S'_d > S_d$ should achieve results that are at least as 
+good as $S$, because in the worst case the added layers would simply learn the identity function and output the same output as $S$.
+Building on this intuition ResNet blocks were built with two paths, a residual path with normal convolutions, and a path from the input to the output without any change.
+The output of the block is the addition of both paths. This gives the network a sort of choice between the residual path and the identity function.
+In practice this method proved to improve the convergence of the model, and sometimes even improve the convergence speed.
+\par
+
+Later research improved on the methods and ideas we discussed in the previous paragraphs with mostly incremental improvements.
+In \cite{inceptionv4}, the authors improve on the Inception architecture introducing Inception V4
+and also incorporating residual connections into the Inception architecture in Inception-ResNet.
+In \cite{wideresnet}, the WRN model proved the importance of the network width is also very important and when correctly optimized
+wider networks can yield even better results than their deeper counterparts.
+\cite{resnext} introduced a generalization of ResNet, called ResNext.
+ResNext is made up of blocks that generalize the residual block. Each block has multiple paths one is an identity mapping,
+the same as in ResNet, and multiple residual paths. Like in ResNet the output is the summation of all the path outputs.
+This architecture can also be seen as generalizing over the structure of the Inception models as the concatenation in the Inception block output
+can be represented as a convolution in each of the paths followed by an addition.
+One of the more recent advances in the field came with \cite{effnet}. This paper does not try to innovate in terms of architecture,
+it introduces a new approach to scaling models. In the paper, the authors consider three dimensions in which the model can be scaled, depth, width, and image resolution.
+\cite{effnet} states that scaling a model along in all three dimensions together is much more beneficial than any subset of them.
+To make the optimal scaling, they propose a method similar to linear programming, in which they constrain the scaling parameters to all be similar in size.
+And then Search for the optimal scaling.
+Starting from a very simple network and scaling it using this method can produce State of the art results
+as shown with the EfficientNet models that were introduced in the paper.
+
+
 \end{document}
