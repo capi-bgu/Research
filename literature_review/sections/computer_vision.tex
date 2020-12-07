@@ -54,6 +54,8 @@ ResNext is made up of blocks that generalize the residual block. Each block has 
 the same as in ResNet, and multiple residual paths. Like in ResNet the output is the summation of all the path outputs.
 This architecture can also be seen as generalizing over the structure of the Inception models as the concatenation in the Inception block output
 can be represented as a convolution in each of the paths followed by an addition.
+\par
+
 One of the more recent advances in the field came with \cite{effnet}. This paper does not try to innovate in terms of architecture,
 it introduces a new approach to scaling models. In the paper, the authors consider three dimensions in which the model can be scaled, depth, width, and image resolution.
 \cite{effnet} states that scaling a model along in all three dimensions together is much more beneficial than any subset of them.
@@ -61,6 +63,9 @@ To make the optimal scaling, they propose a method similar to linear programming
 And then Search for the optimal scaling.
 Starting from a very simple network and scaling it using this method can produce State of the art results
 as shown with the EfficientNet models that were introduced in the paper.
+Another recent addition to the field is the incorporation of attention architectures that were initially introduced to improve
+time-series tasks like text analysis \cite{attention}. But in \cite{image-attention} are shown to be a more generalized
+form of CNN that can outperform traditional CNN architectures.
 
 
 \end{document}
