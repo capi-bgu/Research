@@ -45,7 +45,7 @@ One significant improvement to models such as EmotionNet Nano is the addition of
 Facial Expressions are very dynamic, meaning that information from only one frame can be misleading to the overall emotional state of the subject.
 We can easily imagine a situation where, in three different frames, the subject expresses three different emotions according to a static model,
 and we would have to learn a more general representation of emotion using the surrounding frames.
-Debin Meng et el \cite{fan} explore this idea by creating a two-stage model. The first stage of the model is very straightforward.
+Meng et al. \cite{fan} explore this idea by creating a two-stage model. The first stage of the model is very straightforward.
 It uses a pre-trained ResNet model to create the image embeddings for each frame. The innovative part of the model is in the second attention stage.
 The embeddings are transformed through 4 steps into the final video representation on which softmax is activated to output the label.
 
@@ -67,6 +67,42 @@ features with the hold video representation. This way, the attention can be base
 On the other hand, we can see from the results that the improvement gained from using the second attention layer is relatively small. On the CK+ dataset,
 the second attention layer improved the results from 99.08\% to 99.69\%. We intend to compare the performance-cost tradeoff of
 using the second layer with our model, where the results might differ.
+\par
+
+There are many more ways of tackling this problem, but we would like to focus on an older method \cite{c3d},
+though the results are not comparable to the other two methods as \cite{emotionnet-nano} is only tested on CK+ and \cite{fan}
+is tested on the same dataset but only compares with single network solutions. We can see that the solution proposed in \cite{c3d}
+has at least comparable performance as it achieves 56\% accuracy with its smallest model, compared to 51\% for \cite{fan}.
+Regardless we found the methods proposed in \cite{c3d} unique and worth exploring in our research.
+\par
+
+Fan et al. \cite{c3d} proposes an ensemble made up of three separate models. Similarly to \cite{fan},
+the first model takes a pre-trained VGG model and applies "temporal analysis" to the embedding generated. In this case,
+an LSTM \cite{lstm} layer is used, meaning that each embedding needs to go through the model in order, and only the result of the final frame will
+continue to the next stage. The second model is a simple convolutional network except that the filters are three dimensional instead of
+the two-dimensional filters usually applied to 2D images. Such filters are often used when working with 3D objects as their output is also a 3D tensor.
+In this model, the input is a "3D" shape, made up of a series of images, and the 3D convolutions allow the network to keep the time dimension intact
+and represent the temporal relationships between the images as an additional spatial dimension on which the network can convolve. The third model
+is a simple SVM trained on audio.
+\par
+
+We will not experiment with audio as an additional input for our models, but facial models combined with none image data are already encouraging.
+Though we will attempt an ensemble using keyboard and mouse inputs instead of audio, the paper's ensemble method is still relevant. In the paper,
+the models are weighted according to their performance. The model's results are fused by weighted summation to produce the final prediction. 
+Finally, we note some of the properties of the Conv3D model. First, we have a unique way of dealing with the temporal dimension since
+the model has no unique representation for the time dimension, which is treated as just another spatial dimension. This can cause mixing
+of the features along the time dimension, which could be positive if we consider that the model can generate temporal features along part of the image,
+which is impossible in other methods. On the other hand, the model could confuse time and generate features that mix frames from different
+times in an incorrect order.
+\par
+
+Finally, we note some of the properties of the Conv3D model. First, we have a unique way of dealing with the temporal dimension since the model
+has no unique representation for the time dimension, which is treated as just another spatial dimension.
+This can cause mixing of the features along the time dimension, which could be positive if we consider that the model can generate temporal
+features along part of the image, which is impossible in other methods. On the other hand, the model could confuse time and generate features
+that mix frames from different times in an incorrect order. This method also requires that all the frames have the same augmentations applied
+to them so that the video would be fluid. If the video is augmented frame by frame,
+it could cause the frame to be inconsistent and create wrong temporal features.
 
 
 
