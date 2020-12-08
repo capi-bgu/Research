@@ -6,6 +6,7 @@
 \usepackage[utf8]{inputenc} % allow utf-8 input
 \usepackage[T1]{fontenc}    % use 8-bit T1 fonts
 \usepackage{hyperref}       % hyperlinks
+\usepackage{enumerate}      % pretty enumration
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
@@ -57,8 +58,8 @@ Fill in executive summary when we are done with the reset of the review.
 \end{abstract}
 
 
-% keywords can be removed
-%\keywords{First keyword \and Second keyword \and More}
+ keywords can be removed
+\keywords{First keyword \and Second keyword \and More}
 
 \section{Project Background}
 Our project exists on the intersections between psychology and machine learning, as such we explore in this section three fields, psychology, classical machine learning, and computer vision.
@@ -86,9 +87,27 @@ In this section we dive deeper to into similar work done in this field.
 \subsection{Emotion Recognition Using Keyboard and Mouse}
 \subfile{sections/emotion_recognition_keyboard_mouse}
 
+Until now, we have discussed predicting categorical emotions because most of the research in the 
+field focuses on categorical emotions. As mentioned in the psychology background section, 
+we can also represent emotion as continuous values in the dimensional model. 
+One of our goals is to research the dimensional model using the approaches we have stated before. 
+We will try to predict a numeric value for each of the affective dimensions using 
+regression methods.
+\par
 
-\subsection{Similar Systems}
-\subfile{sections/similar_systems}
+Buechel et al. \cite{emotion_regression} suggest a similar approach for NLP sentiment analysis. 
+Their paper describes a regression model that predicts values in the VAD emotional 
+space \cite{VAD_model} from text data and then transforming the results to Ekman's BE model \cite{Ekman_Theory}. 
+Although we are not using textual data, we feel the accomplishments achieved in their 
+paper are encouraging. The authors claimed their VAD-based system achieves state-of-the-art 
+performance in three out of six emotion categories.
+\par
+
+In conclusion, we believe we can contribute to this field by improving and combining some of the 
+methods we have discussed. Our core idea is to create an ensemble model that will combine the 
+facial expression model with the keyboard and mouse analysis model. 
+Both models will build on the research we have reviewed, combining personalized models with 
+regression methods for predicting VAD-space values and time series methods.
 
 
 \section{Research Plan}
@@ -96,7 +115,8 @@ In this section we dive deeper to into similar work done in this field.
 
 
 
-\bibliographystyle{abbrv}  
+\bibliographystyle{abbrv}
+%\bibliographystyle{apalike}  
 \bibliography{references.bib}
 
 \end{document}
