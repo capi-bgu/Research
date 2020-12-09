@@ -1,11 +1,22 @@
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
-The field of computer vision has undergone a massive change in the last few years, from using hand-engineered features like brightness, color change, edges, etc.
-to using learned features. Though neural networks existed before, they are a very generic representation of learning and can be very hard to meaningfully construct to solve a specific problem.
-The Big innovation that led to the computer vision revolution was the Convolution Layer \cite{originalcnn}, Convolution Layers can be thought of as automatic feature extractors.
-they use the fact that images have structured 2D and learn features by convolving filters of various sizes over the input image. The learnable parameters are the weights of those
-filters which determine what parts of the image are important to the model and how they relate.
+The field of computer vision has undergone a massive change in the last few years, from using hand-engineered features like brightness,
+color change, edges, etc. to using learned features. Though neural networks existed before,
+they are a very generic representation of learning and can be very hard to meaningfully construct to solve a specific problem.
+The Big innovation that led to the computer vision revolution was the Convolution Layer \cite{originalcnn, understanding-cnn}.
+Convolution layers are hidden layers that are structred in a three-dimensional shape instead of the one-dimensional layers in generic neural networks.
+A convolution layer is defined by its shape - $(W,H,F)$ where $W$ is the width of a filter in the layer, $H$ is the hight of the filter and 
+$F$ is the number of filters in the layer.
+\par
+
+Convolution Layers can be thought of as automatic feature extractors. They use the fact that images have 2D structures and learn features by
+convolving 2D filters of various sizes over the input image. The weights of the filters determine what parts of the image are important to the model. 
+The network optimizes the weights between the output of each layer to the filters of the next layer. The result of which yields filters
+representing the areas of the image that are most important to the model.
+Ideally, those representations are general features that can be used for classification. We usually take the last convolution layer's output
+called the embedding and pass it through a fully connected layer to make the classification or regression using the learned features,
+though any classical machine learning model can also be used on the learned features. 
 \par
 
 Though these ideas existed for a while, it would take time for computational power to catch up, as training these models requires a lot of it.

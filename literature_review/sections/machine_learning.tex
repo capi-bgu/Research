@@ -1,0 +1,83 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+Machine Learning is a subfield in Computer Science and in Artificial Intelligence. 
+The field deals with developing and using algorithms designed to allow the machines to 
+learn from examples and operate in various computational tasks that classical programming can not. 
+In other words, the machine is searching for patterns and trying to generalize them to 
+the whole given problem. With this generalization, it can infer knowledge about new data.
+\par
+ 
+In Machine Learning, there are several common problems, and we are focusing on classification 
+and regression.
+In classification problems, the machine receives a set of data and labels for each data point and 
+tries to learn a mapping from given data to the given labels. 
+There are many classification algorithms \cite{machine_learning_classification_algorithms}. The following are some of the basic and most 
+used models:
+\begin{itemize}
+    \item SVM is a classification model. The SVM "draws" a hyperplane to separate the data it is given into two groups.
+        When the model is given a new data point, it will make the classification depending on where the data point is positioned
+        relative to the hyperplane. The model can deal with outlier values, those that are closer to the values of a different class than their own,
+        by misclassifying the training data. Usually, a parameter that controls the number of accepted outlier values is exposed and optimized for
+        the training data using cross-validation.
+    \item Decision trees are classifiers that are based on feature values. Each node is a feature, and each branch is a value of that feature.
+        Every new instance that needs to be classified starts at the root of the tree and follows some path to a leaf according to its values.
+        The tree's root will be the feature that best divides the data, which has the highest information gain.
+        We repeat the splitting process recursively for each node until no features remain or we reach a maximal desired depth.
+    \item K-Nearest Neighbor is a lazy model that checks the distance between a new object and decides his class according
+        to the majority vote of k closest neighbors. KNN can use different distance measurements according to the problem space.
+        It is based on the principle that the instances within a dataset will generally exist close to some other instances that have
+        similar properties.
+\end{itemize}
+On the other hand, in regression problems, the machine receives a set of data and continuous values for 
+each data point. The machine tries to learn a function that will transform given features into a 
+numeric value. That function needs to fit its weights to the given dataset and its values. 
+Some of the classification algorithms mentioned above, such as SVM, Decision Trees, can be 
+modified to fit regression problems as well.
+
+One of the most powerfull and expressive models is the Neural Network. 
+A neural network represents a function or a transformation from some input tensor to some output tensor.
+The building blocks of the network are the vertices or neurons. Each neuron acts as a separate entity having many inputs and outputs.
+A neuron has as many outputs as there are neurons in the following layer and as many inputs as there are neurons in the previous layer.
+Layers are simply collections of neurons that represent a stage in the learning process. There are three basic layer types:
+\begin{itemize}
+    \item Input layer - consisting of input neurons, which take the raw data from the data set or testing set and feed it into the network.
+    \item Hidden layer - consists of an arbitrary amount of neurons and is meant to be an intermediate representation of the data that
+        later can be transformed into the output. A neural network might consist of a different number of hidden layers,
+        each with different amounts of neurons. Most variation in networks comes from the hidden layers.
+        Different network variations work better on different data and different problems.
+    \item Output layer - consists of output neurons. These represent the prediction that the network made.
+        For example, in our case, the neurons represent the emotion as a continuous value or categorical value.
+\end{itemize}
+
+For the network to learn, it is initialized with random weights and feed it data, see the prediction, calculate the error of the prediction,
+and then adjust the weights until the network gives satisfactory results or does not significantly improve its predictions anymore.
+Many error measures exist. A simple one would be MSE. The process of updating the wights after finding the error in the prediction
+is called backpropagation, and the most common algorithm to achieve backpropagation is stochastic Gradient Descent.
+For a more in-depth look at the theory of neural networks see \cite{nnbook1995}.
+\par
+
+In the last few years, many additions were introduced to neural networks that made them perform even better on specific tasks.
+These architectural changes created much interest in the field, which produced  "State of the Art" models in many fields, including image recognition,
+classification, segmentation, generation, text analysis, semantic analysis, and many more. Generally, these "Deep" neural network architectures
+are usually constructed using the following two layers:
+
+\begin{itemize}
+    \item Recurrent Layers better represent time-series data by keeping some hidden state within each neuron. The neuron's hidden state is updated
+        each time an example is passed through the neuron and later used to calculate the neuron's output.
+        This means that the neuron can represent temporal information through its hidden state,
+        and the output of the neuron is affected by the previous examples.
+        A simple example to illustrate the use of RNN is text data. Given a sentence, we input each word of the sentence into the network.
+        The hidden state of the recurrent neurons represents the relationship between the words in the sentence. We can train the network for
+        different tasks, like predicting the sentence's sentiment or even generating text. In the sentiment analysis example,
+        each word we input into the network will produce some sentiment output and update the neurons' hidden state. The final output of the network,
+        after the final word, will be the final sentiment of the sentence. Some improvements to the simple RNN layer exist,
+        such as LSTM \cite{lstm} and GRU\cite{GRU}. These layers contain a more complex mechanism for
+        updating the hidden state to prevent issues such as 
+        vanishing gradients \cite{vanishing-gradients}. 
+    \item Convolutional Layers were created for the image classification task. They can represent two-dimensional data, such as images,
+        much better than generic neural networks. CNN architectures are most well known for their use in computer vision \ref{section:cv}.
+        Though any data that has inherit two dimensional properties can benefit from this design. 
+\end{itemize}
+
+\end{document}

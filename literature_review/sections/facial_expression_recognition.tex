@@ -49,6 +49,8 @@ Meng et al. \cite{fan} explore this idea by creating a two-stage model. The firs
 It uses a pre-trained ResNet model to create the image embeddings for each frame. The innovative part of the model is in the second attention stage.
 The embeddings are transformed through 4 steps into the final video representation on which softmax is activated to output the label.
 
+
+
 \begin{enumerate}[i]
     \item the embeddings $f_i$ flow through a fully connected layer, generating the attention weights for the images - $\alpha_i = \sigma(f_i^Tw_i^0)$
         where $\sigma$ is the activation function, and $w_i^0$ are the weights of the FC layer.

@@ -6,11 +6,12 @@
 \usepackage[utf8]{inputenc} % allow utf-8 input
 \usepackage[T1]{fontenc}    % use 8-bit T1 fonts
 \usepackage{hyperref}       % hyperlinks
-\usepackage{enumerate}      % pretty enumration
+\usepackage{enumerate}      % pretty enumeration
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{svg}
 \usepackage{microtype}      % microtypography
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
@@ -54,15 +55,21 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Fill in executive summary when we are done with the reset of the review.
+  In this project, we attempt to contribute to the field of affective computing by applying some new techniques to the problem of inferring users'
+  emotions. Our goal is to create a model that combines elements from different affective computing subfields.
+  We will use facial expression recognition and keyboard analysis. We will create personalized models to infer a user's emotional state online
+  and offline. These models will use classification algorithms as stated in the related work as well as our new approach of regression. In other words,
+  the question we would like to answer is, can some ensemble of the methods above improve on existing methods. Such development could allow computer
+  systems to better interact with users in various ways, from filtering out bad news if the user is feeling down to helping psychologists track their
+  patients' mental health.
 \end{abstract}
 
 
- keywords can be removed
-\keywords{First keyword \and Second keyword \and More}
-
 \section{Project Background}
-Our project exists on the intersections between psychology and machine learning, as such we explore in this section three fields, psychology, classical machine learning, and computer vision.
+Our project exists on the intersections between psychology and machine learning.
+This section explores four fields, machine learning, computer vision, psychology, and affective computing.
+We felt these fields could give us a rich foundation to build our project upon.
+
 
 \subsection{Psychology}
 \subfile{sections/psychology}
@@ -70,21 +77,25 @@ Our project exists on the intersections between psychology and machine learning,
 \subsection{Affective Computing}
 \subfile{sections/affective_computing}
 
-\subsection{Classical Machine Learning}
-\subfile{sections/classical_ml}
+\subsection{Machine Learning}
+\subfile{sections/machine_learning}
 
-
-\subsection{Computer Vision}
+\subsection{Computer Vision}  \label{section:cv}
 \subfile{sections/computer_vision}
 
 
 \section{Related Work}
-In this section we dive deeper to into similar work done in this field.
+How to infer emotion is a question that was researched for a long time with several approaches and fields.
+Some researchers from emotional psychology tried to investigate how to infer emotions in several ways.
+They believe this task is difficult in general and particularly through the machines. There are many approaches and technologies to infer emotions.
+For instance, using a microphone to get a user’s voice, a camera to take a photo of a user’s face, computer input (keyboard, mouse) to record a user’s
+input behavior or special equipment to measure a user’s physiological state (blood pressure, sweat).
+In our work, we will focus on inferring through camera and computer input.
 
-\subsection{Facial Expression Recognition}
+\subsection{Facial Expression Recognition} \label{section:fer}
 \subfile{sections/facial_expression_recognition}
 
-\subsection{Emotion Recognition Using Keyboard and Mouse}
+\subsection{Emotion Recognition Using Keyboard and Mouse} \label{section:keyboard_mouse}
 \subfile{sections/emotion_recognition_keyboard_mouse}
 
 Until now, we have discussed predicting categorical emotions because most of the research in the 
@@ -113,7 +124,7 @@ regression methods for predicting VAD-space values and time series methods.
 \section{Research Plan}
 \subfile{sections/research_plan}
 
-
+\newpage
 
 \bibliographystyle{abbrv}
 %\bibliographystyle{apalike}  
