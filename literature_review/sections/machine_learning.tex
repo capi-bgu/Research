@@ -15,7 +15,7 @@ tries to learn a mapping from given data to the given labels.
 There are many classification algorithms \cite{machine_learning_classification_algorithms}. The following are some of the basic and most 
 used models:
 
-\begin{samepage}
+ 
 \begin{itemize}
     \item SVM is a classification model. The SVM "draws" a hyperplane to separate the data it is given into two groups.
         When the model is given a new data point, it will make the classification depending on where the data point is positioned
@@ -31,7 +31,6 @@ used models:
         It is based on the principle that the instances within a dataset will generally exist close to some other instances that have
         similar properties.
 \end{itemize}
-\end{samepage}
 
 On the other hand, in regression problems, the machine receives a set of data and continuous values for 
 each data point. The machine tries to learn a function that will transform given features into a 
@@ -45,7 +44,7 @@ The building blocks of the network are the vertices or neurons. Each neuron acts
 A neuron has as many outputs as there are neurons in the following layer and as many inputs as there are neurons in the previous layer.
 Layers are simply collections of neurons that represent a stage in the learning process. There are three basic layer types:
 
-\begin{samepage}
+ 
 \begin{itemize}
     \item Input layer - consisting of input neurons, which take the raw data from the data set or testing set and feed it into the network.
     \item Hidden layer - consists of an arbitrary amount of neurons and is meant to be an intermediate representation of the data that
@@ -55,7 +54,6 @@ Layers are simply collections of neurons that represent a stage in the learning 
     \item Output layer - consists of output neurons. These represent the prediction that the network made.
         For example, in our case, the neurons represent the emotion as a continuous value or categorical value.
 \end{itemize}
-\end{samepage}
 
 For the network to learn, it is initialized with random weights and feed it data, see the prediction, calculate the error of the prediction,
 and then adjust the weights until the network gives satisfactory results or does not significantly improve its predictions anymore.
