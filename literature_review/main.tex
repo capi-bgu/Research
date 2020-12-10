@@ -55,13 +55,13 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  In this project, we attempt to contribute to the field of affective computing by applying some new techniques to the problem of inferring users'
+  In this project, we will attempt to contribute to the field of affective computing by applying some new techniques to the problem of inferring users'
   emotions. Our goal is to create a model that combines elements from different affective computing subfields.
   We will use facial expression recognition and keyboard analysis. We will create personalized models to infer a user's emotional state online
   and offline. These models will use classification algorithms as stated in the related work as well as our new approach of regression. In other words,
-  the question we would like to answer is, can some ensemble of the methods above improve on existing methods. Such development could allow computer
-  systems to better interact with users in various ways, from filtering out bad news if the user is feeling down to helping psychologists track their
-  patients' mental health.
+  the question we would like to answer is, can some ensemble of the methods above improve on existing methods. We feel that significant
+  developments in this space could allow computer systems to better interact with users in various ways, from filtering out bad news if the user
+  is feeling down to helping psychologists track their patients' mental health.
 \end{abstract}
 
 
@@ -86,11 +86,15 @@ We felt these fields could give us a rich foundation to build our project upon.
 
 \section{Related Work}
 How to infer emotion is a question that was researched for a long time with several approaches and fields.
-Some researchers from emotional psychology tried to investigate how to infer emotions in several ways.
-They believe this task is difficult in general and particularly through the machines. There are many approaches and technologies to infer emotions.
+Some researchers from emotional psychology tried to investigate how to infer emotions in several ways, and they all agree
+it is a very difficult task. There are many approaches and technologies to infer emotions.
 For instance, using a microphone to get a user’s voice, a camera to take a photo of a user’s face, computer input (keyboard, mouse) to record a user’s
 input behavior or special equipment to measure a user’s physiological state (blood pressure, sweat).
-In our work, we will focus on inferring through camera and computer input.
+Although the problem is mostly solved using some of the previews mentioned approaches, most of them can not be used in the "real world".
+Most of the mainly used approaches like physiological state require special devices to measure that the "everyday user" does not have.
+Moreover, many people will claim that those approaches are very intrusive and will object to using them daily.
+To deal with this, we will focus on inferring emotions through camera and computer input, which are devices every user has,
+and we will attempt to make their use as private to the user as possible.
 
 \subsection{Facial Expression Recognition} \label{section:fer}
 \subfile{sections/facial_expression_recognition}
@@ -123,8 +127,6 @@ regression methods for predicting VAD-space values and time series methods.
 
 \section{Research Plan}
 \subfile{sections/research_plan}
-
-\newpage
 
 \bibliographystyle{abbrv}
 %\bibliographystyle{apalike}  

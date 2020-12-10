@@ -14,6 +14,7 @@ such as data gathering and labeling.
 
 \subsection{Schedule}
 
+\begin{samepage}
 \begin{itemize}
     \item \emph{10.12.20 - 12.1.21} - Until the end of the first semester, our goal is to have a working data gathering system.
         Once we can gather the data, our experiments for keyboard and mouse models can start. Until then,
@@ -26,6 +27,7 @@ such as data gathering and labeling.
     \item \emph{16.4.21 - 18.6.21} - Until the end of the year, we hope to wrap up any remaining experiments, write all the necessary reports,
         and maybe even a paper.
 \end{itemize}
+\end{samepage}
 
 \subsection{System Architecture}
 In this section, we will give an architecture overview of how the data gathering software should look and operate.
@@ -48,6 +50,7 @@ in addition to using the predictions coming from the server in some way. The sec
 separate process running on the user's computer, though it could also run on a different machine depending on the circumstances.
 The worker is the mediator between the server, the user client, and the user himself (his data).
 
+\begin{samepage}
 \begin{itemize}
     \item \emph{Data Collection} - The data collection module is straightforward. It collects the user's data that is needed for the model to make
         its predictions. This module needs to be very extensible, as different methods might require different data sources and variants.
@@ -75,6 +78,7 @@ The worker is the mediator between the server, the user client, and the user him
         (for example, when a news report comes in, the user client will query the
         database and check the user's current mood).
 \end{itemize}
+\end{samepage}
 
 \subsubsection{Server}
 
@@ -82,12 +86,14 @@ The server is meant to perform the more expensive computations and will likely n
 Though we do not disregard the possibility of the server running on the same machine as the client,
 a perfect example is if we do not want any of the client's data moving through the internet. The server exposes two APIs:
 
+\begin{samepage}
 \begin{itemize}
     \item \emph{Learning API} - the learning API receives requests from the client with labeled data.
         The data from the client is collected and then applied to the client's model during training runs.
     \item \emph{Inference API} - the inference API receives requests from the client with unlabeled data. After it passed through the augmentation module,
         the server runs the client's model on the data and returns the predictions to the client.
 \end{itemize}
+\end{samepage}
 
 This paradigm, where each client has a personalized model on the server, can quickly get very expensive.
 A few possible improvements can be running part of the model in the augmentation module on the client as discussed before,
@@ -136,6 +142,7 @@ labeling than previous methods. Our biggest challenge will be selecting meaningf
 or analyzing the keyboard and mouse features.
 
 \subsection{Team Structure}
+\begin{samepage}
 We have 4 members in our team:
 \begin{itemize}
     \item Shoham Zarfati - Works on the facial expression recognition.
@@ -143,6 +150,7 @@ We have 4 members in our team:
     \item Yuval Khoramian - Works on keyboard and mouse models and physiological aspects of the project.
     \item Hod Twito - Works on keyboard and mouse models and physiological aspects of the project.
 \end{itemize}
+\end{samepage}
 
 \end{document}
 

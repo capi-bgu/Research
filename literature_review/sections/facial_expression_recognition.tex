@@ -15,6 +15,7 @@ As described in the paper, the use of automatic network design exploration provi
 designs in its ability to produce very heterogeneous blocks that better fit the problem.
 As we can see from the model architecture \ref{fig:emotionnet_nano}, two fascinating phenomena exist in this model:
 
+\begin{samepage}
 \begin{itemize}
     \item We can see that the layers' shapes differ from one to another, increasing and decreasing the number of filters through the network.
     \item The residual connections are not the same for each layer and even skip some layers entirely.
@@ -24,6 +25,7 @@ As we can see from the model architecture \ref{fig:emotionnet_nano}, two fascina
         and connect back to the network at deeper layers. These connections provide dimensionality reductions and retain older
         features by mixing the channels, meaning the model's expressiveness is increased for a low computational cost.
 \end{itemize}
+\end{samepage}
 
 We chose to focus on this paper because of the model's simplicity combined with its state of the art performance. In the paper,
 the authors present two models. One smaller and less accurate model, achieving 92\% accuracy on CK+,
@@ -49,8 +51,7 @@ Meng et al. \cite{fan} explore this idea by creating a two-stage model. The firs
 It uses a pre-trained ResNet model to create the image embeddings for each frame. The innovative part of the model is in the second attention stage.
 The embeddings are transformed through 4 steps into the final video representation on which softmax is activated to output the label.
 
-
-
+\begin{samepage}
 \begin{enumerate}[i]
     \item the embeddings $f_i$ flow through a fully connected layer, generating the attention weights for the images - $\alpha_i = \sigma(f_i^Tw_i^0)$
         where $\sigma$ is the activation function, and $w_i^0$ are the weights of the FC layer.
@@ -60,6 +61,7 @@ The embeddings are transformed through 4 steps into the final video representati
     \item finally we sum up all the attention weights to get the final representation of the video - 
     $c = \frac{\sum_{i=1}^{n}\alpha_i\beta_i[f_i:c']}{\sum_{i=1}^{i=n}\alpha_i\beta_i}$
 \end{enumerate}
+\end{samepage}
 
 In the paper, the first two steps are referred to as self-attention, and the last two steps are called relation-attention.
 This combination of the more traditional self-attention approach and the so-called relation-attention enables a much more refined network.
