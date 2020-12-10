@@ -7,26 +7,26 @@ to propose such a technique. They used mood induction on their participants
 (showed them clips for each affective state) and then asked them to perfom tasks on 
 the computer and fill a questionnaire about their affective state. They set five 
 different affective states (PVHA, PVLA, NVHA, NVLA, and nVnA (P = positive, N = negative, 
-H = high, L = low, n = neutral, V = valence, A = arousal)) which were measured with 
-Self-Assessment-Manikin that measures valance and arousal in a quick graphical way. 
+H = high, L = low, n = neutral, V = valence, A = arousal)) which were measured with the 
+Self-Assessment-Manikin, a test that measures valance and arousal in a quick graphical way. 
 They tried to look at user’s input parameters like mouse clicks per minute, average 
 duration of mouse clicks, distance of mouse, pauses in mouse movement, heavy mouse movement, 
-duration of keystroke, typing speed. However, they did not show their results and used models, 
+duration of keystroke, typing speed. However, they did not show their results and models, 
 but they showed a way that can be further researched.
 \par
 
 Later researcher, Khanna et al. \cite{Khanna}, tried to focus on the keyboard only and used 
 similar features to Zimmerman, as well as number of backspaces and idle time. 
 They gave the participants fixed texts to write, which is different from the previous work 
-where the participants had to complete tasks as they want. In addition, three categories of 
+where the participants were free to complete the tasks as they wish. In addition, three categories of 
 emotional state were measured: neutral, negative, and positive. Some classifiers such as Trees 
 (Random Tree, J48, BF Tree) and Rules (Simple Logistics, SMO, Multilayer Perceptron) were used to 
-analyze the data. From the results, it looked like Trees algorithms gave better results, BF Tree in 
+analyze the data. From the results, it looked like Tree algorithms gave better results, BF Tree in 
 particular. They measured the recognition rate of negative and positive emotional states, 
 each against the neutral emotional states. The results indicate that typing speed decreases when 
 the user is in a negative emotional state and increases when he is in a positive emotional state. 
 In other words, we can infer that typing speed is a good feature to understand users' emotional state. 
-An important note is that this paper worked with three categories and not with granular emotions.
+An important note is that this paper worked with three categories and not with more granular emotions.
 \par
 
 In another research, Salmeron-Majadas et al. \cite{An_Evaluation_Of_Mouse_And_Keyboard_Interaction}, tried to look more 
@@ -51,12 +51,12 @@ Although they predicted only the valance dimension, they suggest checking the ar
 dimension for further research.
 \par
 
-In contrast, Pentel in his research \cite{Pentel} found other mouse features to measure the arousal 
-and valence.  In his experiment, he gave the participants keyboard and mouse tasks after using 
+In contrast, Pentel in his research \cite{Pentel} found other mouse features to measure arousal 
+and valence. In his experiment, he gave the participants keyboard and mouse tasks after using 
 emotion induction movie clips. 
-Each clip had a specific emotion (Amusement, Happiness, Sadness, Fear) that psychologies proved 
-it is affecting watchers (just as Zimmerman did in his experiment). 
-He repeated each task with each emotion so he will have vast data. 
+Each clip induced a specific emotion (Amusement, Happiness, Sadness, Fear) that psychologies proved 
+affects watchers (just as Zimmerman did in his experiment). 
+He repeated each task with each emotion so he will have more data. 
 Some of the used mouse features were:
 
 \begin{samepage}
@@ -70,8 +70,8 @@ Some of the used mouse features were:
 
 All these features relate to mouse movement. He found that the first feature (i) gave the 
 best information gain for both arousal and valence, which contrasts to the previous paper \cite{An_Evaluation_Of_Mouse_And_Keyboard_Interaction}, 
-which says the movement is not that good for both of them. 
-In keyboard, the features that were taken are: hold, seek key time, digraph and trigraph timing as 
+which claims movement is not as good for both of them. 
+In keyboard, the features that were taken are: hold, seek key time, digraph and trigraph timing as in 
 the last paper, and frequency of delete/backspace keys. He tried to handle typing speed differences 
 between participants, so he standardized the time-based keystroke features. 
 To evaluate the data and features, he used 10-fold cross-validation on models such as 
@@ -81,15 +81,15 @@ than the keyboard features. Nevertheless, both features gave a baseline above 60
 \par
 
 Although Ghosh et al. \cite{Ghosh} researched emotion recognition with smartphones, 
-they made interesting and related stuff for emotion recognition through keyboard and mouse. 
-Their paper's main contributions were personalized machine model that uses both typing 
+they made interesting and related points for emotion recognition through keyboard and mouse. 
+Their paper's main contributions was personalized machine model that uses both typing 
 characteristics on smartphones and emotion persistence effect in self-reports to infer 
 multiple emotion states. In other words, they suggest training a personalized model that 
 trains on a different dataset for each user, which is a new approach to this field, 
-something we would like to try. Moreover, in their predictions, they considered previous 
+and something we would like to try as well. Moreover, in their predictions, they considered previous 
 emotional states, which is a new approach. They showed that this feature they called "PRE" has 
 high information gain (0.44). Other features they suggested were working hours 
-(so they infer the participant is more stressed than usual) and typing speed. 
+(so they infer the participant is more stressed than usual during working hours) and typing speed. 
 They said that typing speed is a good indicator consistent with Khanna \cite{Khanna}.
 \par
 
@@ -101,6 +101,11 @@ state without interrupting him, which they solved by giving the participant a "n
 default option. Another challenge they faced was imbalanced data, which lowered the accuracy of 
 some emotions. They used the "SMOTE" technique to solve that problem, which increased the 
 accuracy by 4\% (from 80\% to 84\%).
-In our research, our goal is to infer emotion without emotion induction. We will not affect how the participant feels and gather the data “out in the wild”. Moreover, we will try several ways to label the affective states, like a different number of emotions from the valence and arousal. Furthermore, our study will try to use regression instead of classification so we will be able to predict a more varied  more precisely. In aspect of features, we will try to combine some features discussed above and may add some more.
+In our research, we intend to use this approach as well conducting an "out in the wild" experiment for data gathering.
+
+% Moreover, we will try several ways to label the affective states,
+% like a different number of emotions from the valence and arousal. Furthermore,
+% our study will try to use regression instead of classification so we will be able to predict a more varied  more precisely.
+% In aspect of features, we will try to combine some features discussed above and may add some more.
 
 \end{document}
