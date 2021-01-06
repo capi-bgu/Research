@@ -62,8 +62,8 @@ The worker is the mediator between the server, the user client, and the user him
     \item \emph{Augmentation Module} - When data reaches the augmentation module, it means that it needs to get to the server to make a prediction,
         the augmentation module has two goals:
         \begin{enumerate}[i]
-            \item \emph{Preprocessing} - usually, a model needs the data to be preprocessed in some way before it can be used,
-                as this is a relatively cheap operation, it is performed in the client to save compute time on the server.
+            \item \emph{Augmentation} - We might want to apply additional augmentations to our data when training, or even at inference time,
+                augmentations can be image rotations, flips, adding noise and so on.
             \item \emph{Reduction} - Some models can split in a way that allows one part to reduce the dimensionality of the data and the other to
                 make a prediction using the data embedded in the reduced dimension. An excellent example of that is a CNN architecture with
                 multiple pooling layers. Because the data is often not small, especially with images or videos, we prefer to run as
