@@ -10,10 +10,8 @@ The platform will be as implementation-independent as possible to allow the easy
 The platform will provide utilities that will be necessary for any method trying to create personalized models,
 such as data gathering and labeling.
 
-
 \subsection{Schedule}
 
- 
 \begin{itemize}
     \item \emph{10.12.20 - 12.1.21} - Until the end of the first semester, our goal is to have a working data gathering system.
         Once we can gather the data, our experiments for keyboard and mouse models can start. Until then,
@@ -26,7 +24,7 @@ such as data gathering and labeling.
     \item \emph{16.4.21 - 18.6.21} - Until the end of the year, we hope to wrap up any remaining experiments, write all the necessary reports,
         and maybe even a paper.
 \end{itemize}
- 
+
 
 \subsection{System Architecture}
 In this section, we will give an architecture overview of how the data gathering software should look and operate.
@@ -53,6 +51,8 @@ The worker is the mediator between the server, the user client, and the user him
 \begin{itemize}
     \item \emph{Data Collection} - The data collection module is straightforward. It collects the user's data that is needed for the model to make
         its predictions. This module needs to be very extensible, as different methods might require different data sources and variants.
+    \item \emph{Data Processing} - The data processing module receives data from data collectors, it applies appropriate data processing to the data,
+        such as normalization, scaling, and so on. It then passes the processed data to the next stage in the system.
     \item \emph{Learning Gate} - The learning gate is a simple construct tuned for each model or user. It simply decides when the model needs
         to continue its training. If it decides the model can make a prediction, the data from the Data Collector is passed to the
         Augmentation module. Otherwise, the data will be passed to the learning module.
@@ -139,6 +139,7 @@ The most significant uncertainty in our research comes from the data gathering p
 is extremely difficult, if not impossible. We hope that our personalized models, regression models, and time series analysis can better use this
 labeling than previous methods. Our biggest challenge will be selecting meaningful features, whether it is by modifying our neural network models
 or analyzing the keyboard and mouse features.
+
 
 \subsection{Team Structure}
  
