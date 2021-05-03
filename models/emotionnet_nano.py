@@ -59,6 +59,4 @@ def emotion_nano_b(input_shape=(48, 48, 1), num_classes=7):
 
     dense = layers.Dense(num_classes, activation='softmax', name="output")(pool)
 
-    model = Model(inputs=inputs, outputs=dense)
-    model.compile()
-    return
+    return Model(inputs=inputs, outputs=dense, name="EmotionNet-Nano")
