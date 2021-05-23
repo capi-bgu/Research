@@ -6,7 +6,7 @@ import numpy as np
 import sklearn.base
 import wandb
 from sklearn.metrics import accuracy_score, f1_score, balanced_accuracy_score, precision_score, \
-    recall_score, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
+    recall_score, mean_squared_error, mean_absolute_error
 from sklearn.model_selection import KFold
 from tensorflow import keras
 from tensorflow.python.keras.callbacks import ModelCheckpoint
@@ -38,12 +38,10 @@ def clf_scores(true_values, pred_probs):
 def reg_scores(true_values, pred_values):
     mae = mean_absolute_error(true_values, pred_values)
     mse = mean_squared_error(true_values, pred_values)
-    mape = mean_absolute_percentage_error(true_values, pred_values)
 
     return [
         ("mean absolute error", mae),
         ("mean squared error", mse),
-        ("mean absolute percentage error", mape)
     ]
 
 
