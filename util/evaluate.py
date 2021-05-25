@@ -17,14 +17,15 @@ CapiModel = NewType("CapiModel", Union[keras.Model, sklearn.base.BaseEstimator, 
 Scorer = NewType("Scorer", Callable[[NdArrayLike, NdArrayLike], List[Tuple[str, Any]]])
 
 
-def clf_scores(true_values, pred_probs):
-    pred_values = np.argmax(pred_probs, axis=1)
+def clf_scores(true_values, predictions):
+    if len(predictions.shape) == 2:
+        predictions = np.argmax(predictions, axis=1)
 
-    acc = accuracy_score(true_values, pred_values)
-    bacc = balanced_accuracy_score(true_values, pred_values)
-    precision = precision_score(true_values, pred_values, average='micro')
-    recall = recall_score(true_values, pred_values, average='micro')
-    f1 = f1_score(true_values, pred_values, average='micro')
+    acc = accuracy_score(true_values, predictions)
+    bacc = balanced_accuracy_score(true_values, predictions)
+    precision = precision_score(true_values, predictions, average='micro')
+    recall = recall_score(true_values, predictions, average='micro')
+    f1 = f1_score(true_values, predictions, average='micro')
 
     return [
         ("accuracy", acc),
