@@ -22,10 +22,10 @@ def identity(filters, name):
     return __identity_inner
 
 
-def emotion_nano_b(input_shape=(48, 48, 1), num_classes=7):
-    block1 = [11, 9, 11, 8, 11, 7, 11, 27]
-    block2 = [27, 19, 27, 26, 27, 36]
-    block3 = [64, 39, 64, 24, 64]
+def emotion_nano_b(input_shape=(48, 48, 1), num_classes=6,
+                   block1=(11, 9, 11, 8, 11, 7, 11, 27),
+                   block2=(27, 19, 27, 26, 27, 36),
+                   block3=(4, 39, 64, 24, 64)):
 
     inputs = keras.Input(shape=input_shape)
     block1_conv1 = conv(block1[0], "block1_conv1")(inputs)

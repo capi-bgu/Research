@@ -61,7 +61,8 @@ def resnet(blocks, image_shape):
     return Model(inputs=inputs, outputs=out, name='resnet')
 
 
-def fanet(res_blocks, image_shape, frames, attention_type='self', base_builder=resnet) -> Model:
+def fanet(res_blocks=(2, 2, 2, 2), image_shape=(48, 48, 1), frames=5,
+          attention_type='self', base_builder=resnet, num_classes=6) -> Model:
     # input shape should be (examples, frames, w, h, d)
     inputs = layers.Input(shape=(frames,) + image_shape)
     base = base_builder(res_blocks, image_shape)
@@ -103,9 +104,6 @@ def fanet(res_blocks, image_shape, frames, attention_type='self', base_builder=r
         attention = attention / tf.reduce_sum(betas_stack * alphas_stack, axis=1)
 
     attention = layers.Dropout(0.5)(attention)
-    pred = layers.Dense(7, activation='softmax')(attention)
+    pred = layers.Dense(num_classes, activation='softmax')(attention)
 
     return Model(inputs=inputs, outputs=pred, name="Frame-Attention")
-
-
-
