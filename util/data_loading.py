@@ -1,14 +1,13 @@
-import sqlite3
-from typing import List
-
-import pandas as pd
-import pickle
-import numpy as np
 import json
-
+import pickle
+import sqlite3
+import numpy as np
+import pandas as pd
+from typing import List
+from typing import Union
 from oratio.Session import Session
-from oratio.processing.KeyboardProcessor import KeyboardProcessor
 from oratio.processing.MouseProcessor import MouseProcessor
+from oratio.processing.KeyboardProcessor import KeyboardProcessor
 from oratio.processing.SessionMetaProcessor import SessionMetaProcessor
 
 
@@ -159,39 +158,47 @@ def process_raw_data(db, duration: int, channel: str):
     return db
 
 
-def load_features(path: str, channel: str, duration: int):
-    db = load_db(path, channel)
-    fix_data = channel != "Camera"
-    fix_time_margins(db, margin=1.5, fix_data=fix_data)
-    mdb = merge_sessions(db, duration)
-    pdb = process_raw_data(mdb, duration, channel)
+def load_features(path: str, channels: Union[List[str], str], duration: int):
+    if type(channels) == str:
+        channels = [channels]
+    data = None
+    for channel in channels:
+        db = load_db(path, channel)
+        fix_data = channel != "Camera"
+        fix_time_margins(db, margin=1.5, fix_data=fix_data)
+        mdb = merge_sessions(db, duration)
+        pdb = process_raw_data(mdb, duration, channel)
+        if data is None:
+            data = pdb
+        data = data.join(pdb[pdb.columns.difference(data.columns)])
+
     categorical_list = []
     valance_list = []
     arousal_list = []
     dominance_list = []
 
-    for index, row in pdb.iterrows():
+    for index, row in data.iterrows():
         categorical_list.append(row["label"]["categorical"])
         valance_list.append(row["label"]["VAD"]["valance"])
         arousal_list.append(row["label"]["VAD"]["arousal"])
         dominance_list.append(row["label"]["VAD"]["dominance"])
 
-    pdb = pdb.drop(columns=["label"])
-    pdb["categorical"] = categorical_list
-    pdb["valance"] = valance_list
-    pdb["arousal"] = arousal_list
-    pdb["dominance"] = dominance_list
-    pdb["positive"] = (pdb["valance"] >= 4).astype(int)
-    return pdb
+    data = data.drop(columns=["label"])
+    data["categorical"] = categorical_list
+    data["valance"] = valance_list
+    data["arousal"] = arousal_list
+    data["dominance"] = dominance_list
+    data["positive"] = (data["valance"] >= 4).astype(int)
+    return data
 
 
-def load_all(paths: List[str], channel, session_length=10, use_pooling=True):
+def load_all(paths: List[str], channels: Union[List[str], str], session_length=10, use_pooling=True):
     dbs = [p for p in paths]
     if use_pooling:
         from multiprocessing import Pool
         import itertools
         p = Pool()
-        dbs = p.starmap(load_features, zip(dbs, itertools.repeat(channel, len(dbs)), itertools.repeat(session_length, len(dbs))))
+        dbs = p.starmap(load_features, zip(dbs, itertools.repeat(channels, len(dbs)), itertools.repeat(session_length, len(dbs))))
     else:
-        dbs = [load_features(name, channel, session_length) for name in dbs]
+        dbs = [load_features(name, channels, session_length) for name in dbs]
     return dbs
