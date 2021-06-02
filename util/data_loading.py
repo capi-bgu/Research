@@ -168,6 +168,7 @@ def load_features(path: str, channels: Union[List[str], str], duration: int):
         fix_time_margins(db, margin=1.5, fix_data=fix_data)
         mdb = merge_sessions(db, duration)
         pdb = process_raw_data(mdb, duration, channel)
+        pdb = pdb.rename(columns={"idle_time": "idle_time_"+channel})
         if data is None:
             data = pdb
         data = data.join(pdb[pdb.columns.difference(data.columns)])
