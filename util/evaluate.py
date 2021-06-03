@@ -161,16 +161,16 @@ class Evaluator(ABC):
         if self.use_logger:
             wandb.log({"validation " + metric: score for (metric, score) in val_scores}, commit=False)
             if self.task == Task.CLF:
-                val_class_pred = np.argmax(val_pred, axis=1)
-                wandb.log({"validation confusion matrix": wandb.plot.confusion_matrix(val_class_pred,
-                                                                                      y_val,
-                                                                                      list(label_map.values()))},
+                wandb.log({"validation confusion matrix": wandb.plot.confusion_matrix(probs=val_pred,
+                                                                                      y_true=y_val,
+                                                                                      class_names=list(
+                                                                                          label_map.values()))},
                           commit=False)
 
         return val_pred
 
     def log_testing(self, model: CapiModel, testing_data: NdArrayLike, testing_labels: NdArrayLike,
-                    label_map: Dict[int, str] = None, ensemble=False) -> NdArrayLike:
+                    label_map: Dict[int, str] = None) -> NdArrayLike:
         """
         If logging is enabled this method will log the testing metrics.
         This method is called once at the end of each fold, after calculating the validation metrics.
@@ -178,25 +178,43 @@ class Evaluator(ABC):
         """
         test_pred = self.predict(model, testing_data)
         test_scores = self.scorer(testing_labels, test_pred)
-        if not ensemble:
-            print(f"test results for fold number {self.fold}:")
+        print(f"test results for fold number {self.fold}:")
 
         for metric, score in test_scores:
             print(f"  {metric}: {score}")
 
-        if not ensemble:
-            print("----------------------------------------")
+        print("----------------------------------------")
 
         if self.use_logger:
             wandb.log({"test " + metric: score for (metric, score) in test_scores}, commit=False)
             if self.task == Task.CLF:
-                test_class_pred = np.argmax(test_pred, axis=1)
-                wandb.log({"testing confusion matrix": wandb.plot.confusion_matrix(test_class_pred,
-                                                                                   testing_labels,
-                                                                                   list(label_map.values()))},
+                wandb.log({"testing confusion matrix": wandb.plot.confusion_matrix(probs=test_pred,
+                                                                                   y_true=testing_labels,
+                                                                                   class_names=list(
+                                                                                       label_map.values()))},
                           commit=False)
 
         return test_pred
+
+    def log_ensemble(self, testing_labels, ensemble_pred, label_map):
+        """
+        If logging is enabled this method will log the ensemble metrics.
+        This method is called once at the end of the evaluation run.
+        """
+        ensemble_scores = self.scorer(testing_labels, ensemble_pred)
+        print("ensemble results:")
+
+        for metric, score in ensemble_scores:
+            print(f"  {metric}: {score}")
+
+        if self.use_logger:
+            wandb.log({"test " + metric: score for (metric, score) in ensemble_scores}, commit=False)
+            if self.task == Task.CLF:
+                wandb.log({"ensemble confusion matrix": wandb.plot.confusion_matrix(probs=ensemble_scores,
+                                                                                    y_true=testing_labels,
+                                                                                    class_names=list(
+                                                                                        label_map.values()))},
+                          commit=False)
 
     def log_examples(self, model: CapiModel, test_data: NdArrayLike, test_labels: NdArrayLike, test_pred: NdArrayLike):
         """
@@ -265,10 +283,9 @@ class Evaluator(ABC):
 
         if self.use_ensemble:
             print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            print(f"mean classifier test results:")
             self._init_logger()
             ensemble_pred = self.predict_ensemble()
-            self.log_testing(ensemble_pred, testing_labels, label_map)
+            self.log_ensemble(testing_labels, ensemble_pred, label_map)
             print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
             self._end_fold(ensemble_pred)
