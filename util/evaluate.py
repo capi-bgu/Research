@@ -65,10 +65,10 @@ class Evaluator(ABC):
         self.test_predictions = []
         self.fold = 0
 
-        if not model_path:
+        if model_path is None:
             model_path = f"./{self.project}/{self.name}"
 
-        self.callbacks = [ModelCheckpoint(path=model_path, save_best_only=True)]
+        self.callbacks = [ModelCheckpoint(model_path, save_best_only=True, save_weights_only=True)]
 
         if use_logger:
             self.callbacks += [WandbCallback(save_model=False)]
