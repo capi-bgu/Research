@@ -64,14 +64,10 @@ class Evaluator(ABC):
         self.use_ensemble = use_ensemble
         self.test_predictions = []
         self.fold = 0
+        self.model_path = model_path
 
-        if model_path is None:
-            model_path = f"./{self.project}/{self.name}"
-
-        self.callbacks = [ModelCheckpoint(model_path, save_best_only=True, save_weights_only=True)]
-
-        if use_logger:
-            self.callbacks += [WandbCallback(save_model=False)]
+        if self.model_path is None:
+            self.model_path = f"./{self.project}/{self.name}"
 
         if self.task == Task.REG:
             self.scorer = reg_scores
@@ -256,7 +252,11 @@ class Evaluator(ABC):
             x_val = training_data[val_index]
             y_val = training_labels[val_index]
 
-            model = self.train((x_train, y_train), (x_val, y_val), self.callbacks)
+            callbacks = [ModelCheckpoint(self.model_path, save_best_only=True, save_weights_only=True)]
+            if self.use_logger:
+                callbacks += [WandbCallback(save_model=False)]
+
+            model = self.train((x_train, y_train), (x_val, y_val), callbacks)
 
             self.log_validation(model, x_val, y_val, label_map)
             test_pred = self.log_testing(model, testing_data, testing_labels, label_map)
