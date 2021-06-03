@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Tuple, Any, Union, Dict, NewType, List, Callable
+from typing import Tuple, Any, Union, Dict, NewType, List, Callable, Generator
 
 import numpy as np
 import sklearn.base
@@ -224,7 +224,8 @@ class Evaluator(ABC):
 
     def evaluate(self, training: Tuple[NdArrayLike, NdArrayLike],
                  testing: Tuple[NdArrayLike, NdArrayLike],
-                 label_map: Dict[int, str] = None, splits=5):
+                 label_map: Dict[int, str] = None, splits=5,
+                 fold_generator=None):
         """
         Evaluates the model given training and testing data.
         This method also accepts `label_map`. If you are evaluating a classification model,
@@ -233,15 +234,21 @@ class Evaluator(ABC):
         This method also accepts `splits` - the number of folds to evaluate the model with.
         """
 
+        self.test_predictions = []
+        self.fold = 0
+
         print("----------------------------------------")
         print(f"evaluating {self.name} model")
         print("----------------------------------------")
 
         training_data, training_labels = training
         testing_data, testing_labels = testing
-        kf = KFold(n_splits=splits)
 
-        for train_index, val_index in kf.split(training_data):
+        if fold_generator is None:
+            kf = KFold(n_splits=splits)
+            fold_generator = kf.split(training_data)
+
+        for train_index, val_index in fold_generator:
             self._init_logger()
             x_train = training_data[train_index]
             y_train = training_labels[train_index]
@@ -265,6 +272,3 @@ class Evaluator(ABC):
             print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
             self._end_fold(ensemble_pred)
-
-        self.test_predictions = []
-        self.fold = 0

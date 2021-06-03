@@ -62,7 +62,7 @@ class Tuner(ABC):
                 wandb.init(
                     project=self.project,
                     group=f"{self.name}-sweep",
-                    name=f"{self.name}-sweep",
+                    name=f"{self.name}-sweep-{trial.number}",
                     config=self.params
                 )
                 callbacks += [WandbCallback(save_model=False)]
