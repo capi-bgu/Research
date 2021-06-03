@@ -158,7 +158,7 @@ class Evaluator(ABC):
             print(f"  {metric}: {score}")
         print()
 
-        if not self.use_logger:
+        if self.use_logger:
             wandb.log({"validation " + metric: score for (metric, score) in val_scores}, commit=False)
             if self.task == Task.CLF:
                 val_class_pred = np.argmax(val_pred, axis=1)
@@ -187,7 +187,7 @@ class Evaluator(ABC):
         if not ensemble:
             print("----------------------------------------")
 
-        if not self.use_logger:
+        if self.use_logger:
             wandb.log({"test " + metric: score for (metric, score) in test_scores}, commit=False)
             if self.task == Task.CLF:
                 test_class_pred = np.argmax(test_pred, axis=1)
