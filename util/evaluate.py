@@ -283,7 +283,7 @@ class Evaluator(ABC):
 
         if self.use_ensemble:
             print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            self._init_logger()
+            self._init_logger(ensemble=True)
             ensemble_pred = self.predict_ensemble()
             self.log_ensemble(testing_labels, ensemble_pred, label_map)
             print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
