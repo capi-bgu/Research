@@ -210,7 +210,7 @@ class Evaluator(ABC):
         if self.use_logger:
             wandb.log({"test " + metric: score for (metric, score) in ensemble_scores}, commit=False)
             if self.task == Task.CLF:
-                wandb.log({"ensemble confusion matrix": wandb.plot.confusion_matrix(probs=ensemble_scores,
+                wandb.log({"ensemble confusion matrix": wandb.plot.confusion_matrix(probs=ensemble_pred,
                                                                                     y_true=testing_labels,
                                                                                     class_names=list(
                                                                                         label_map.values()))},
