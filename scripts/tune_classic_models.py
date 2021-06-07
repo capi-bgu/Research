@@ -766,79 +766,6 @@ def get_best_models(tuners, X_train, X_test, y_train, y_test,
     with open(f'{path_to_save}/voting/model.md', 'wb') as model_file:
         pickle.dump(voting_model, model_file)
 
-
-def tune_all_models(trials=None):
-    for testee in testees:
-        tune_testee_models(testee, trials)
-
-
-def tune_testee_models(name, trials=None):
-    print(f"**********tuning {name}'s data**********")
-    if not os.path.isdir(f"{path_to_save}/{name}"):
-        os.mkdir(f"{path_to_save}/{name}")
-    for duration in durations:
-        tune_testee_duration_models(name, duration, trials)
-
-
-def tune_testee_duration_models(name, duration, trials=None):
-    print(f"------{name}__{duration}------")
-    if not os.path.isdir(f"{path_to_save}/{name}"):
-        os.mkdir(f"{path_to_save}/{name}")
-    if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
-        os.mkdir(f"{path_to_save}/{name}/{duration}")
-    for channel in channels:
-        tune_testee_channel_models(name, duration, channel, trials)
-
-
-def tune_testee_channel_models(name, duration, channel, trials=None):
-    print(f"------{name}__{duration}__{channel}------")
-    if not os.path.isdir(f"{path_to_save}/{name}"):
-        os.mkdir(f"{path_to_save}/{name}")
-    if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
-        os.mkdir(f"{path_to_save}/{name}/{duration}")
-    if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel}"):
-        os.mkdir(f"{path_to_save}/{name}/{duration}/{channel}")
-    print(f"reading {name}'s data")
-    X, X_train, X_test, y, y_train, y_test = load_data(f"/content/drive/MyDrive/capi/data/public/{name}.db", channel,
-                                                       duration)
-    print("finished reading the data")
-    for labeling_type in labels:
-        tune_testee_label_models(name, duration, channel, labeling_type, (X, X_train, X_test, y, y_train, y_test),
-                                 trials)
-
-
-def tune_testee_label_models(name, duration, channel, labeling_type, data=None, trials=None):
-    if not os.path.isdir(f"{path_to_save}/{name}"):
-        os.mkdir(f"{path_to_save}/{name}")
-    if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
-        os.mkdir(f"{path_to_save}/{name}/{duration}")
-    if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel}"):
-        os.mkdir(f"{path_to_save}/{name}/{duration}/{channel}")
-    if os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel}"):
-        print(f"!!!!! been there done that !!!!! \n Error in {name} {duration} {channel} {labeling_type}")
-        return
-    print(f"------{name}__{duration}__{channel}__{labeling_type}------")
-    os.mkdir(f"{path_to_save}/{name}/{duration}/{channel}/{labeling_type}")
-
-    if labeling_type == "categorical" or labeling_type == "positive":
-        weights = clf_weights
-        tuners = clf_tuners
-    else:
-        weights = reg_weights
-        tuners = reg_tuners
-
-    if data is not None:
-        X, X_train, X_test, y, y_train, y_test = data
-    else:
-        print(f"reading {name}'s data")
-        X, X_train, X_test, y, y_train, y_test = load_data(f"/content/drive/MyDrive/capi/data/public/{name}.db",
-                                                           channel, duration)
-        print("finished reading the data")
-
-    get_best_models(tuners, X_train, X_test, y_train, y_test, labeling_type, weights,
-                    path_to_save=f"{path_to_save}/{name}/{duration}/{channel}/{labeling_type}",
-                    verbose=False, trials=trials)
-
 clf_tuners = [BaggingTuner,
               AdaBoostTuner,
               LinearSVMTuner,
@@ -870,6 +797,79 @@ testees = ["yuval", "ron", "liraz", "niv", "shira-no_images",
            "shiran", "tal", "amit_dabash-no_images", "shoham"]
 path_to_save = f"/content/drive/MyDrive/capi/results"
 
+def tune_all_models(trials=None):
+    for testee in testees:
+        tune_testee_models(testee, trials)
+
+
+def tune_testee_models(name, trials=None):
+    print(f"**********tuning {name}'s data**********")
+    if not os.path.isdir(f"{path_to_save}/{name}"):
+        os.mkdir(f"{path_to_save}/{name}")
+    for duration in durations:
+        tune_testee_duration_models(name, duration, trials)
+
+
+def tune_testee_duration_models(name, duration, trials=None):
+    print(f"------{name}__{duration}------")
+    if not os.path.isdir(f"{path_to_save}/{name}"):
+        os.mkdir(f"{path_to_save}/{name}")
+    if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
+        os.mkdir(f"{path_to_save}/{name}/{duration}")
+    for channel_name in channels:
+        tune_testee_channel_models(name, duration, channel_name, trials)
+
+
+def tune_testee_channel_models(name, duration, channel_name, trials=None):
+    print(f"------{name}__{duration}__{channel_name}------")
+    if not os.path.isdir(f"{path_to_save}/{name}"):
+        os.mkdir(f"{path_to_save}/{name}")
+    if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
+        os.mkdir(f"{path_to_save}/{name}/{duration}")
+    if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}"):
+        os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}")
+    print(f"reading {name}'s {channel_name} data")
+    X, X_train, X_test, y, y_train, y_test = load_data(f"/content/drive/MyDrive/capi/data/public/{name}.db",
+                                                       channels[channel_name], duration)
+    print("finished reading the data")
+    for labeling_type in labels:
+        tune_testee_label_models(name, duration, channel_name, labeling_type, (X, X_train, X_test, y, y_train, y_test),
+                                 trials)
+
+
+def tune_testee_label_models(name, duration, channel_name, labeling_type, data=None, trials=None):
+    print(f"------{name}__{duration}__{channel_name}__{labeling_type}------")
+    if not os.path.isdir(f"{path_to_save}/{name}"):
+        os.mkdir(f"{path_to_save}/{name}")
+    if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
+        os.mkdir(f"{path_to_save}/{name}/{duration}")
+    if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}"):
+        os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}")
+    if os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}"):
+        print(f"!!!!! been there done that !!!!! \n  Error in {name} {duration} {channel_name} {labeling_type}\n\n")
+        return
+    os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}")
+
+    if labeling_type == "categorical" or labeling_type == "positive":
+        weights = clf_weights
+        tuners = clf_tuners
+    else:
+        weights = reg_weights
+        tuners = reg_tuners
+
+    if data is not None:
+        X, X_train, X_test, y, y_train, y_test = data
+    else:
+        print(f"reading {name}'s {channel_name} data")
+        X, X_train, X_test, y, y_train, y_test = load_data(f"/content/drive/MyDrive/capi/data/public/{name}.db",
+                                                           channels[channel_name], duration)
+        print("finished reading the data")
+
+    get_best_models(tuners, X_train, X_test, y_train, y_test, labeling_type, weights,
+                    path_to_save=f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}",
+                    verbose=False, trials=trials)
+    print("\n\n")
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
@@ -887,6 +887,6 @@ if __name__ == '__main__':
     elif args.channel is None:
         tune_testee_duration_models(args.name, args.duration, args.trials)
     elif args.labeling_type is None:
-        tune_testee_channel_models(args.name, args.duration, args.channel, args.trials)
+        tune_testee_channel_models(args.name, args.duration, channels[args.channel], args.trials)
     else:
-        tune_testee_label_models(args.name, args.duration, args.channel, args.labeling_type, args.trials)
+        tune_testee_label_models(args.name, args.duration, args.channel, args.labeling_type, trials=args.trials)
