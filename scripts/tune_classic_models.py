@@ -785,7 +785,7 @@ reg_tuners = [SVRTuner,
               RandomForestRegressorTuner]
 reg_weights = {"mean absolute error": 1, "mean squared error": 1}
 
-durations = [1, 2, 5, 10, 15]
+durations = [1, 5, 10]
 channels = {"Mouse": "Mouse",
             "Keyboard": "Keyboard",
             "Both": ["Mouse", "Keyboard"]}
