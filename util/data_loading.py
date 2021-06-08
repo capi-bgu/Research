@@ -121,7 +121,7 @@ def merge_sessions(df, num_sessions):
     return merged_df
 
 
-def process_raw_data(db, duration: int, channel: str):
+def process_raw_data(db, duration: int, channel: str, metadata_model_path: str):
     if channel == "Keyboard":
         processor = KeyboardProcessor()
         init_features = processor._KeyboardProcessor__init_features
@@ -131,7 +131,7 @@ def process_raw_data(db, duration: int, channel: str):
     elif channel == "Camera":
         db = db.rename(columns={"data": "images"})
         db = db.assign(data=np.nan)
-    metadata_processor = SessionMetaProcessor(resources_path="/content/drive/MyDrive/capi/models")
+    metadata_processor = SessionMetaProcessor(resources_path=metadata_model_path)
 
     for sid in range(len(db)):
         session = Session(sid, duration, None, None)
@@ -158,7 +158,7 @@ def process_raw_data(db, duration: int, channel: str):
     return db
 
 
-def load_features(path: str, channels: Union[List[str], str], duration: int):
+def load_features(path: str, channels: Union[List[str], str], duration: int, metadata_model_path: str = "/content/drive/MyDrive/capi/models"):
     if type(channels) == str:
         channels = [channels]
     data = None
@@ -167,7 +167,7 @@ def load_features(path: str, channels: Union[List[str], str], duration: int):
         fix_data = channel != "Camera"
         fix_time_margins(db, margin=1.5, fix_data=fix_data)
         mdb = merge_sessions(db, duration)
-        pdb = process_raw_data(mdb, duration, channel)
+        pdb = process_raw_data(mdb, duration, channel, metadata_model_path)
         pdb = pdb.rename(columns={"idle_time": "idle_time_"+channel})
         if data is None:
             data = pdb

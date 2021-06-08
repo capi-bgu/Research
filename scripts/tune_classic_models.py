@@ -7,7 +7,6 @@ from optuna.trial import Trial
 import matplotlib.pyplot as plt
 from Research.util.tune import *
 from sklearn.svm import LinearSVC
-from imblearn.over_sampling import *
 from Research.util.evaluate import *
 from sklearn.linear_model import Lars
 from sklearn.linear_model import Lasso
@@ -23,7 +22,6 @@ from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import AdaBoostClassifier
-from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestRegressor
@@ -33,8 +31,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier
 
 """# Data"""
-def load_data(path, channels, duration):
-    data = load_features(path, channels, duration)
+def load_data(data_path, resources_path, channels, duration):
+    data = load_features(data_path, channels, duration, resources_path)
     labels = ["categorical", "valance", "arousal", "dominance", "positive"]
     y = data[labels]
     X = data.drop(columns=["session", "time"] + labels)
@@ -796,6 +794,7 @@ labels = ["categorical", "positive", "valance", "arousal", "dominance"]
 testees = ["yuval", "ron", "liraz", "niv", "shira-no_images",
            "shiran", "tal", "amit_dabash-no_images", "shoham"]
 path_to_save = f"/content/drive/capi/results"
+resources_path = f"/content/drive/capi/models"
 data_path = f"/content/data"
 
 def tune_all_models(trials=None):
@@ -830,7 +829,7 @@ def tune_testee_channel_models(name, duration, channel_name, trials=None):
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}"):
         os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}")
     logging.warning(f"reading {name}'s {channel_name} data")
-    X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db",
+    X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db", resources_path,
                                                        channels[channel_name], duration)
     logging.warning("finished reading the data")
     for labeling_type in labels:
@@ -862,7 +861,7 @@ def tune_testee_label_models(name, duration, channel_name, labeling_type, data=N
         X, X_train, X_test, y, y_train, y_test = data
     else:
         logging.warning(f"reading {name}'s {channel_name} data")
-        X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db",
+        X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db", resources_path,
                                                            channels[channel_name], duration)
         logging.warning("finished reading the data")
     try:
@@ -895,6 +894,7 @@ if __name__ == '__main__':
     parser.add_argument("-t", "--trials", type=int)
     parser.add_argument("--data_path")
     parser.add_argument("--save_path")
+    parser.add_argument("--resources_path")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
 
@@ -904,6 +904,9 @@ if __name__ == '__main__':
 
     if args.save_path is not None:
         path_to_save = args.save_path
+
+    if args.resources_path is not None:
+        resources_path = args.resources_path
 
     logging.basicConfig(level=logging.WARNING, filename=os.path.join(path_to_save, f"tuning_logger_{datetime.datetime.now()}.log"),
                         format='%(asctime)s.%(msecs)03d - %(levelname)s: %(message)s',
