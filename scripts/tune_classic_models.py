@@ -795,7 +795,8 @@ channels = {"Mouse": "Mouse",
 labels = ["categorical", "positive", "valance", "arousal", "dominance"]
 testees = ["yuval", "ron", "liraz", "niv", "shira-no_images",
            "shiran", "tal", "amit_dabash-no_images", "shoham"]
-path_to_save = f"/content/drive/MyDrive/capi/results"
+path_to_save = f"/content/drive/capi/results"
+data_path = f"/content/data"
 
 def tune_all_models(trials=None):
     for testee in testees:
@@ -829,7 +830,7 @@ def tune_testee_channel_models(name, duration, channel_name, trials=None):
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}"):
         os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}")
     print(f"reading {name}'s {channel_name} data")
-    X, X_train, X_test, y, y_train, y_test = load_data(f"/content/drive/MyDrive/capi/data/public/{name}.db",
+    X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db",
                                                        channels[channel_name], duration)
     print("finished reading the data")
     for labeling_type in labels:
@@ -861,7 +862,7 @@ def tune_testee_label_models(name, duration, channel_name, labeling_type, data=N
         X, X_train, X_test, y, y_train, y_test = data
     else:
         print(f"reading {name}'s {channel_name} data")
-        X, X_train, X_test, y, y_train, y_test = load_data(f"/content/drive/MyDrive/capi/data/public/{name}.db",
+        X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db",
                                                            channels[channel_name], duration)
         print("finished reading the data")
 
@@ -870,15 +871,30 @@ def tune_testee_label_models(name, duration, channel_name, labeling_type, data=N
                     verbose=False, trials=trials)
     print("\n\n")
 
+
 if __name__ == '__main__':
     import argparse
+    import os
+
+    if 'DISPLAY' not in os.environ:
+        os.system('Xvfb :1 -screen 0 1600x1200x16  &')
+        os.environ['DISPLAY'] = ':1.0'
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--name", choices=testees)
     parser.add_argument("-d", "--duration", type=int, choices=durations)
     parser.add_argument("-c", "--channel", choices=list(channels.keys()))
     parser.add_argument("-l", "--labeling_type", choices=labels)
     parser.add_argument("-t", "--trials", type=int)
+    parser.add_argument("--data_path")
+    parser.add_argument("--save_path")
     args = parser.parse_args()
+
+    if args.data_path is not None:
+        data_path = args.data_path
+
+    if args.save_path is not None:
+        path_to_save = args.save_path
 
     if args.name is None:
         tune_all_models(args.trials)
