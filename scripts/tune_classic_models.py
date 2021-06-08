@@ -903,6 +903,7 @@ if __name__ == '__main__':
     parser.add_argument("-t", "--trials", type=int)
     parser.add_argument("--data_path")
     parser.add_argument("--save_path")
+    parser.add_argument("--log_path")
     parser.add_argument("--resources_path")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
@@ -917,7 +918,11 @@ if __name__ == '__main__':
     if args.resources_path is not None:
         resources_path = args.resources_path
 
-    logging.basicConfig(level=logging.WARNING, filename=os.path.join(path_to_save, f"tuning_logger_{datetime.datetime.now()}.log"),
+    log_path = args.log_path
+    if log_path is None:
+        log_path = path_to_save
+
+    logging.basicConfig(level=logging.WARNING, filename=os.path.join(log_path, f"tuning_logger_{datetime.datetime.now()}.log"),
                         format='%(asctime)s.%(msecs)03d - %(levelname)s: %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
     if args.debug:
