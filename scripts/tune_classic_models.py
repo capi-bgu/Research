@@ -770,7 +770,6 @@ clf_tuners = [BaggingTuner,
               KNeighborsTuner,
               DecisionTreeTuner,
               RandomForestTuner,
-              GradientBosstingTuner,
               LogisticRegressionTuner]
 clf_weights = {"accuracy": 1, "balanced accuracy": 0.5,
                "precision": 0, "recall": 0, "f1 score": 0}
