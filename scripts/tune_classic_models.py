@@ -709,7 +709,7 @@ def get_best_models(tuners, X_train, X_test, y_train, y_test,
 
     for tuner in tuners:
         tuner = tuner(X_train, X_test, y_train, y_test, labeling_type, weights)
-        print(f"~~~~~~~~~~~~~~~~~~~~{tuner.name}~~~~~~~~~~~~~~~~~~~~")
+        logging.warning(f"~~~~~~~~~~~~~~~~~~~~{tuner.name}~~~~~~~~~~~~~~~~~~~~")
         if trials is not None:
             tuner.run(trials, use_logger=False)
         else:
@@ -719,7 +719,7 @@ def get_best_models(tuners, X_train, X_test, y_train, y_test,
             untrained_best_models[tuner.name] = tuner.build_model()
             tuner.show_best_results(path_to_save)
 
-    print(f"~~~~~~~~~~~~~~~~~~~~voting~~~~~~~~~~~~~~~~~~~~")
+    logging.warning(f"~~~~~~~~~~~~~~~~~~~~voting~~~~~~~~~~~~~~~~~~~~")
     estimators = list(untrained_best_models.items())
     if task == "classification":
         voting_model = VotingClassifier(estimators, voting='hard', weights=None,
@@ -804,7 +804,7 @@ def tune_all_models(trials=None):
 
 
 def tune_testee_models(name, trials=None):
-    print(f"**********tuning {name}'s data**********")
+    logging.warning(f"**********tuning {name}'s data**********")
     if not os.path.isdir(f"{path_to_save}/{name}"):
         os.mkdir(f"{path_to_save}/{name}")
     for duration in durations:
@@ -812,7 +812,7 @@ def tune_testee_models(name, trials=None):
 
 
 def tune_testee_duration_models(name, duration, trials=None):
-    print(f"------{name}__{duration}------")
+    logging.warning(f"------{name}__{duration}------")
     if not os.path.isdir(f"{path_to_save}/{name}"):
         os.mkdir(f"{path_to_save}/{name}")
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
@@ -822,24 +822,24 @@ def tune_testee_duration_models(name, duration, trials=None):
 
 
 def tune_testee_channel_models(name, duration, channel_name, trials=None):
-    print(f"------{name}__{duration}__{channel_name}------")
+    logging.warning(f"------{name}__{duration}__{channel_name}------")
     if not os.path.isdir(f"{path_to_save}/{name}"):
         os.mkdir(f"{path_to_save}/{name}")
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
         os.mkdir(f"{path_to_save}/{name}/{duration}")
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}"):
         os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}")
-    print(f"reading {name}'s {channel_name} data")
+    logging.warning(f"reading {name}'s {channel_name} data")
     X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db",
                                                        channels[channel_name], duration)
-    print("finished reading the data")
+    logging.warning("finished reading the data")
     for labeling_type in labels:
         tune_testee_label_models(name, duration, channel_name, labeling_type, (X, X_train, X_test, y, y_train, y_test),
                                  trials)
 
 
 def tune_testee_label_models(name, duration, channel_name, labeling_type, data=None, trials=None):
-    print(f"------{name}__{duration}__{channel_name}__{labeling_type}------")
+    logging.warning(f"------{name}__{duration}__{channel_name}__{labeling_type}------")
     if not os.path.isdir(f"{path_to_save}/{name}"):
         os.mkdir(f"{path_to_save}/{name}")
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}"):
@@ -847,7 +847,7 @@ def tune_testee_label_models(name, duration, channel_name, labeling_type, data=N
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}"):
         os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}")
     if os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}"):
-        print(f"!!!!! been there done that !!!!! \n  Error in {name} {duration} {channel_name} {labeling_type}\n\n")
+        logging.error(f"!!!!! been there done that !!!!! \n  Error in {name} {duration} {channel_name} {labeling_type}\n\n")
         return
     os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}")
 
@@ -861,20 +861,27 @@ def tune_testee_label_models(name, duration, channel_name, labeling_type, data=N
     if data is not None:
         X, X_train, X_test, y, y_train, y_test = data
     else:
-        print(f"reading {name}'s {channel_name} data")
+        logging.warning(f"reading {name}'s {channel_name} data")
         X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db",
                                                            channels[channel_name], duration)
-        print("finished reading the data")
-
-    get_best_models(tuners, X_train, X_test, y_train, y_test, labeling_type, weights,
-                    path_to_save=f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}",
-                    verbose=False, trials=trials)
-    print("\n\n")
+        logging.warning("finished reading the data")
+    try:
+        get_best_models(tuners, X_train, X_test, y_train, y_test, labeling_type, weights,
+                        path_to_save=f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}",
+                        verbose=False, trials=trials)
+    except Exception as e:
+        logging.error(f"!!!!! Error in {name} {duration} {channel_name} {labeling_type} !!!!!\n {e} is thrown")
+        shutil.rmtree(f"{path_to_save}/{name}/{duration}/{channel_name}/{labeling_type}")
+    logging.warning("\n\n")
 
 
 if __name__ == '__main__':
-    import argparse
     import os
+    import shutil
+    import logging
+    import datetime
+    import argparse
+
 
     if 'DISPLAY' not in os.environ:
         os.system('Xvfb :1 -screen 0 1600x1200x16  &')
@@ -888,13 +895,22 @@ if __name__ == '__main__':
     parser.add_argument("-t", "--trials", type=int)
     parser.add_argument("--data_path")
     parser.add_argument("--save_path")
+    parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
+
 
     if args.data_path is not None:
         data_path = args.data_path
 
     if args.save_path is not None:
         path_to_save = args.save_path
+
+    logging.basicConfig(level=logging.WARNING, filename=os.path.join(path_to_save, f"tuning_logger_{datetime.datetime.now()}.log"),
+                        format='%(asctime)s.%(msecs)03d - %(levelname)s: %(message)s',
+                        datefmt='%m/%d/%Y %H:%M:%S')
+    if args.debug:
+        logging.getLogger().addHandler(logging.StreamHandler())
+        logging.getLogger().setLevel(logging.WARNING)
 
     if args.name is None:
         tune_all_models(args.trials)
