@@ -829,8 +829,13 @@ def tune_testee_channel_models(name, duration, channel_name, trials=None):
     if not os.path.isdir(f"{path_to_save}/{name}/{duration}/{channel_name}"):
         os.mkdir(f"{path_to_save}/{name}/{duration}/{channel_name}")
     logging.warning(f"reading {name}'s {channel_name} data")
-    X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db", resources_path,
-                                                       channels[channel_name], duration)
+    try:
+        X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db", resources_path,
+                                                           channels[channel_name], duration)
+    except Exception as e:
+        logging.error(f"!!!!! Error in reading {name} {duration} {channel_name} data !!!!!\n {e} is thrown")
+        shutil.rmtree(f"{path_to_save}/{name}/{duration}/{channel_name}")
+        return
     logging.warning("finished reading the data")
     for labeling_type in labels:
         tune_testee_label_models(name, duration, channel_name, labeling_type, (X, X_train, X_test, y, y_train, y_test),
@@ -861,8 +866,13 @@ def tune_testee_label_models(name, duration, channel_name, labeling_type, data=N
         X, X_train, X_test, y, y_train, y_test = data
     else:
         logging.warning(f"reading {name}'s {channel_name} data")
-        X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db", resources_path,
-                                                           channels[channel_name], duration)
+        try:
+            X, X_train, X_test, y, y_train, y_test = load_data(f"{data_path}/{name}.db", resources_path,
+                                                               channels[channel_name], duration)
+        except Exception as e:
+            logging.error(f"!!!!! Error in reading {name} {duration} {channel_name} data !!!!!\n {e} is thrown")
+            shutil.rmtree(f"{path_to_save}/{name}/{duration}/{channel_name}")
+            return
         logging.warning("finished reading the data")
     try:
         get_best_models(tuners, X_train, X_test, y_train, y_test, labeling_type, weights,
