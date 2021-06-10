@@ -936,6 +936,6 @@ if __name__ == '__main__':
     elif args.channel is None:
         tune_testee_duration_models(args.name, args.duration, args.trials)
     elif args.labeling_type is None:
-        tune_testee_channel_models(args.name, args.duration, channels[args.channel], args.trials)
+        tune_testee_channel_models(args.name, args.duration, args.channel, args.trials)
     else:
         tune_testee_label_models(args.name, args.duration, args.channel, args.labeling_type, trials=args.trials)
