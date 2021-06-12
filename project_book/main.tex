@@ -1,0 +1,118 @@
+\documentclass{article}
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8x]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{enumerate}      % pretty enumeration
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{svg}
+\usepackage[titletoc]{appendix}
+\usepackage{microtype}      % microtypography
+\usepackage{graphicx}
+\usepackage{culmus}
+\usepackage[hebrew,english]{babel}
+\graphicspath{ {./images/} }
+\usepackage{subfiles}
+
+
+\begin{document}
+
+\subfile{cover/cover_en}
+\subfile{cover/cover_he}
+
+\tableofcontents
+
+\newpage
+
+\section{Project Background}
+Our project exists on the intersections between psychology and machine learning.
+This section explores four fields, machine learning, computer vision, psychology, and affective computing.
+We felt these fields could give us a rich foundation to build our project upon.
+
+
+\subsection{Psychology}
+\subfile{sections/psychology}
+
+\subsection{Affective Computing}
+\subfile{sections/affective_computing}
+
+\subsection{Machine Learning}
+\subfile{sections/machine_learning}
+
+\subsection{Computer Vision}  \label{section:cv}
+\subfile{sections/computer_vision}
+
+
+\section{Litrature Review}
+How to infer emotion is a question that was researched for a long time with several approaches and fields.
+Some researchers from emotional psychology tried to investigate how to infer emotions in several ways, and they all agree
+it is a very difficult task. There are many approaches and technologies to infer emotions.
+For instance, using a microphone to get a user’s voice, a camera to take a photo of a user’s face, computer input (keyboard, mouse) to record a user’s
+input behavior or special equipment to measure a user’s physiological state (blood pressure, sweat).
+Although the problem is mostly solved using some of the previews mentioned approaches, most of them can not be used in the "real world".
+Most of the mainly used approaches like physiological state require special devices to measure that the "everyday user" does not have.
+Moreover, many people will claim that those approaches are very intrusive and will object to using them daily.
+To deal with this, we will focus on inferring emotions through camera and computer input, which are devices every user has,
+and we will attempt to make their use as private to the user as possible.
+
+\subsection{Facial Expression Recognition} \label{section:fer}
+\subfile{sections/facial_expression_recognition}
+
+\subsection{Emotion Recognition Using Keyboard and Mouse} \label{section:keyboard_mouse}
+\subfile{sections/emotion_recognition_keyboard_mouse}
+
+\subsection{Conclusion}
+
+Until now, we have discussed predicting categorical emotions because most of the research in the 
+field focuses on categorical emotions. As mentioned in the psychology background section, 
+we can also represent emotion as continuous values in the dimensional model. 
+One of our goals is to research the dimensional model using the approaches we have stated before. 
+We will try to predict a numeric value for each of the affective dimensions using 
+regression methods.
+\par
+
+Buechel et al. \cite{emotion_regression} suggest a similar approach for NLP sentiment analysis. 
+Their paper describes a regression model that predicts values in the VAD emotional 
+space \cite{VAD_model} from text data and then transforming the results to Ekman's BE model \cite{Ekman_Theory}. 
+Although we are not using textual data, we feel the accomplishments achieved in their 
+paper are encouraging. The authors claimed their VAD-based system achieves state-of-the-art 
+performance in three out of six emotion categories.
+\par
+
+In conclusion, we believe we can contribute to this field by improving and combining some of the 
+methods we have discussed. Our core idea is to create an ensemble model that will combine the 
+facial expression model with the keyboard and mouse analysis model. 
+Both models will build on the research we have reviewed, combining personalized models with 
+regression methods for predicting VAD-space values and time series methods.
+
+\newpage
+
+\section{Research Plan}
+\subfile{sections/research_plan}
+
+\section{Results}
+\subfile{sections/results}
+
+\section{Conclusions and Future Work}
+Conclusions go here.
+
+\bibliographystyle{abbrv}
+\bibliography{references.bib}
+
+\newpage
+
+\begin{appendices}
+  \section{Data Collection System}
+  \subfile{sections/collection_system}
+  
+  \section{Additional Results}
+  \subfile{sections/additional_results}
+\end{appendices}
+
+\end{document}

@@ -1,0 +1,41 @@
+\begin{document}
+   
+We can divide our experiments across three categories, facial expression recognition,
+keyboard and mouse dynamics, and ensemble. We will also discuss our data gathering techniques here.
+\par
+
+We have two types of data gathering. Mood induced data gathering will be performed in a controlled environment. Each participant
+will be exposed to a series of videos, movies, games, or some other emotion-inducing media depending on the participant's preferences.
+The method of mood induction could be different between participants.
+While watching the videos, we will record the participants and label their emotions on the VAD scale and the corresponding
+categorical emotions scale. During breaks in the experiment, we will ask the participants to perform some computer tasks and record
+their keyboard and mouse. The participants will be recorded during the task, as well. We hope to have at least 10 participants, each recorded
+between 1 and 3 hours in this experiment.
+
+A second way we will collect data is using an "out in the wild" experiment. We will let a few people (including ourselves)
+install the data gathering system we built and use it for between 1 and 3 weeks. The participants will be occasionally prompted
+to label their emotions on the VAD scale. We will collect clips of the participants a few seconds before they are prompted to
+label their emotions, as well as the last few seconds, or minutes of keyboard and mouse usage,
+and some general statistics of keyboard and mouse use in accordance to what was described in \ref{section:keyboard_mouse}.
+\par
+
+For the keyboard and mouse, we have three dimensions along which we need to experiment: model type, personal vs. general model,
+classification vs. regression model. We will only use the data we collected for this experiment because we have not found any publicly
+available data for keyboard and mouse dynamics with emotion labels. 
+\par
+
+The facial expression recognition experiments will be more structured as the model search space is practically infinite.
+We will experiment with the three model types we discussed in \ref{section:fer}. Also, experimenting with regression variations of said
+models and with personalized variations. We will first focus on the regression vs. classification and model architecture, as most data sets
+do not differentiate the participants. Once our data gathering is complete, we will experiment more with making the models personalized.
+\par
+
+The ensemble experiments will have to come last in our timeline. Here we will experiment with combining the facial expression models and the
+keyboard and mouse models. We will only select some of the best models from each category and use different ensemble methods to combine them.
+\par
+
+The most significant uncertainty in our research comes from the data gathering process. Collecting labels that are representative of emotions
+is extremely difficult, if not impossible. We hope that our personalized models, regression models, and time series analysis can better use this
+labeling than previous methods. Our biggest challenge will be selecting meaningful features, whether it is by modifying our neural network models
+or analyzing the keyboard and mouse features. 
+\end{document}
