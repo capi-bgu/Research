@@ -12,6 +12,8 @@
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{svg}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage[titletoc]{appendix}
 \usepackage{microtype}      % microtypography
 \usepackage{graphicx}
@@ -29,6 +31,10 @@
 \tableofcontents
 
 \newpage
+
+\section{Introduction}
+\subfile{sections/introduction}
+
 
 \section{Project Background}
 Our project exists on the intersections between psychology and machine learning.
@@ -96,11 +102,15 @@ regression methods for predicting VAD-space values and time series methods.
 \section{Research Plan}
 \subfile{sections/research_plan}
 
+\newpage
+
 \section{Results}
 \subfile{sections/results}
 
 \section{Conclusions and Future Work}
 Conclusions go here.
+
+\newpage
 
 \bibliographystyle{abbrv}
 \bibliography{references.bib}
