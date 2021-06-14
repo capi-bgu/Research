@@ -1,3 +1,50 @@
 \begin{document}
-    Introduction goes here.
+phone than with any other human. However, despite this "intimacy", the laptop has no idea how we are feeling. 
+It has no idea if we are happy, mad, or just having a bad day. Today's technology has no emotional intelligence. 
+So, what if our technology could sense our emotions? What if our devices could sense how we felt and reacted accordingly, 
+just how an emotionally intelligent friend would?  Imagine yourself, for example, having a bad day, being through sad events,
+and can't handle any sad news today. The computer can sense your sadness, show you less sad news and more happy ones, 
+or simply play you a song it knows tends to make you happy.
+These questions led us to research the field of Affective-Computing and explore the possibilities of applying machine learning to the problem of 
+emotionally intelligent computers.
+
+After an in-depth process of searching for applications that realize our vision, 
+we realized that although the field does exist and is researched under the field of Affective-Computing, 
+it is entirely in its infancy. Some companies and laboratories try to solve the problem with different approaches. 
+There were attempts to identify people's emotions using facial expressions, analyze emotions using brain waves from an EEG machine, 
+and process data from various physiological sensors such as temperature, blood pressure, heart rate, Etc.
+
+These approaches are problematic for the everyday user - a person who sits in front of the computer or phone, chats, 
+plays, works, or simply watches a movie. The approaches that use custom sensors require the user to purchase those sensors, 
+which are very expensive and know how to operate them. These sensors are also very intrusive to the user's privacy. 
+Technologies that are based only on facial expressions are also problematic. Most applications we found using this approach use heavy neural network
+models trained on a group of people who sat in front of a camera and made expressions suitable for emotions - smile to show joy, raise eyebrows to show surprise.
+As a result, the models do not identify the users' emotions but their facial expressions - which do not always match the emotion, moreover in different people, 
+the same emotion can be represented by different expressions [image from Lisa Fe's book]. 
+When sitting alone in front of a computer, most people do not emphasize their facial expressions in such a "drastic" way as the actors by whom the 
+models were trained.
+
+There are different approaches in the literature, such as learning from keyboard and mouse dynamics. 
+A limited number of studies use these approaches. The studies we have found do not reveal the data, 
+the data collection system and focus on a single channel and one type of emotion without comparison with different methods and approaches.
+
+In our research, we tried to examine a proposal to streamline existing methods and their integration to maintain the users' 
+privacy to the maximum extent and facilitate future research. We use several channels simultaneously to collect user data and extract 
+usfull features from each channel:
+
+\begin{itemize}
+    \item Keyboard - we extract features like typing speed, and average time between key presses.
+    \item Mouse - we extract features such as movment speed, number of clicks, and press duration.
+    \item Camera - we focus the image on the user’s face to remove noise.  
+\end{itemize}
+
+These channels are accessible to almost any user without unique components while being simple to collect data from without privacy intrusion. 
+Furthermore, we take the approach of personal models for each user because, as we said before, different people can represent the same emotion 
+with different facial expressions and different usage patterns.
+
+During the study, we built a system for collecting data from users. 
+Then, using the data we collected, we built models for each user for each channel we mentioned above and models that combine the channels. 
+From the results we got, we saw that the face models brought the best results. The combined models yielded results similar to the face models,
+while the keyboard and mouse were not as good, though better than expected.
+
 \end{document}

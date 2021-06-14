@@ -11,12 +11,14 @@
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{graphicx}
+\usepackage{rotating}
 \usepackage{svg}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage[titletoc]{appendix}
 \usepackage{microtype}      % microtypography
-\usepackage{graphicx}
+\usepackage{listings}
 \usepackage{culmus}
 \usepackage[hebrew,english]{babel}
 \graphicspath{ {./images/} }
@@ -35,6 +37,7 @@
 \section{Introduction}
 \subfile{sections/introduction}
 
+\newpage
 
 \section{Project Background}
 Our project exists on the intersections between psychology and machine learning.
@@ -54,6 +57,7 @@ We felt these fields could give us a rich foundation to build our project upon.
 \subsection{Computer Vision}  \label{section:cv}
 \subfile{sections/computer_vision}
 
+\newpage
 
 \section{Litrature Review}
 How to infer emotion is a question that was researched for a long time with several approaches and fields.
@@ -108,7 +112,33 @@ regression methods for predicting VAD-space values and time series methods.
 \subfile{sections/results}
 
 \section{Conclusions and Future Work}
-Conclusions go here.
+In conclusion, after looking at the experiments and models we received, we came to several conclusions. 
+First, we confirmed the hypothesis with which we started the project - that personal models for each user will produce better results than general models,
+under the restrictions we set for ourselves of easy and fast models.
+
+We also saw that we could achieve good results, above the baseline with high confidence, 
+in each information channel and each type of labeling. The classification models for predicting the six basic emotions yielded promising results. 
+For each of the channels, we showed that we could learn and identify emotions in a good way that matches the results obtained in the literature. 
+Similarly, the positive or negative emotion prediction models also yielded impressively and, as expected, better results than the prediction of 
+the six basic emotions since fewer categories are predicted. 
+In predictions of our regression models on the VAD dimensions, we encountered many challenges, 
+mainly predicting the sudden extremes created by a sharp change in emotion. 
+
+However, we have often been able to predict the direction of change of the emotion, increase or decrease, for each dimension.
+Moreover, we also showed that the use of the keyboard and mouse channels yielded impressive results, above expectations, 
+even if they were inferior to those of the camera. Contrary to expectations, given the high differences between the camera model 
+results and the keyboard and mouse models, the ensemble models did not improve the results, reaching almost all the same results for the 
+camera models themselves. In our opinion, the results we received in the keyboard and mouse channels are even more interesting than those of 
+the camera because they provide proof of concept, and with further research, it will be possible to achieve even more impressive results.
+
+Further research could try to improve our research in several different approaches. 
+We can first try to use deep learning models such as LSTM for the keyboard and mouse channels that provide us with time-based data. 
+Such models proved to be suitable for such data. Currently, after receiving a label, our system retroactively applies the label to the last session. 
+This approach could be changed to apply the label only to half of the last session and half of the next session. We could also try more different session durations. 
+In addition, we can try to add different data channels to the system using our library. Another channel we thought of is the user's voice. 
+Of course, the experiments can be extended to a broader number of users, which will give a higher level of confidence regarding the models' 
+ability to predict emotions for different people. Moreover, to perform field experiments, which, unlike the laboratory experiments we performed, 
+will take longer and provide more data that will be more realistic.
 
 \newpage
 
@@ -118,10 +148,12 @@ Conclusions go here.
 \newpage
 
 \begin{appendices}
-  \section{Data Collection System}
+  \section{Data Collection System} \label{appendix:collection_system}
   \subfile{sections/collection_system}
   
-  \section{Additional Results}
+  \newpage
+
+  \section{Additional Results} \label{appendix:additional_results}
   \subfile{sections/additional_results}
 \end{appendices}
 

@@ -1,41 +1,42 @@
 \begin{document}
    
-We can divide our experiments across three categories, facial expression recognition,
-keyboard and mouse dynamics, and ensemble. We will also discuss our data gathering techniques here.
-\par
+We can divide our experiments across two categories, facial expression recognition, keyboard dynamics, and mouse dynamics.
+We will also discuss our data gathering techniques here. Data gathering based on mood induction was performed in a controlled environment. 
+First, each participant was exposed to a series of videos that are emotion-inducing. 
+Every video is meant to induce a specific emotion, such as a happy video to induce happiness, a sad video to induce sadness, Etc, 
+in order to try to collect a wider variety of emotions.
+Some of the videos were taken by the suggestion of Rumpa et el. \cite{exp_videos} and some from social media.
 
-We have two types of data gathering. Mood induced data gathering will be performed in a controlled environment. Each participant
-will be exposed to a series of videos, movies, games, or some other emotion-inducing media depending on the participant's preferences.
-The method of mood induction could be different between participants.
-While watching the videos, we will record the participants and label their emotions on the VAD scale and the corresponding
-categorical emotions scale. During breaks in the experiment, we will ask the participants to perform some computer tasks and record
-their keyboard and mouse. The participants will be recorded during the task, as well. We hope to have at least 10 participants, each recorded
-between 1 and 3 hours in this experiment.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=10cm]{figures/exp_flow}   
+    \caption{State machine diagram describing the flow of the expirement.}
+    \label{fig:exp_flow} 
+\end{figure}
 
-A second way we will collect data is using an "out in the wild" experiment. We will let a few people (including ourselves)
-install the data gathering system we built and use it for between 1 and 3 weeks. The participants will be occasionally prompted
-to label their emotions on the VAD scale. We will collect clips of the participants a few seconds before they are prompted to
-label their emotions, as well as the last few seconds, or minutes of keyboard and mouse usage,
-and some general statistics of keyboard and mouse use in accordance to what was described in \ref{section:keyboard_mouse}.
-\par
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=10cm]{figures/collection_ui}   
+    \caption{Collection system user interface.}
+    \label{fig:collection_ui} 
+\end{figure}
 
-For the keyboard and mouse, we have three dimensions along which we need to experiment: model type, personal vs. general model,
-classification vs. regression model. We will only use the data we collected for this experiment because we have not found any publicly
-available data for keyboard and mouse dynamics with emotion labels. 
-\par
+Second, after every video, the participant had to complete a mission using the keyboard and another mission using the mouse. 
+On the keyboard-based task, after every video, the participant had to write what he saw (in Hebrew) and write the first stanza from the poem 
+"The Road not Taken" (in English). On the mouse-based task, after every video, the participant had to play a game 
+called Bubble Shooter for around 2-4 minutes. In the game, the participant needs to move the mouse over different angles and 
+shoot balls in different colors by clicking on the mouse to match series of balls in the same color. Every minute, 
+the participant had to answer a form in which he was asked how he felt in different perspectives. 
 
-The facial expression recognition experiments will be more structured as the model search space is practically infinite.
-We will experiment with the three model types we discussed in \ref{section:fer}. Also, experimenting with regression variations of said
-models and with personalized variations. We will first focus on the regression vs. classification and model architecture, as most data sets
-do not differentiate the participants. Once our data gathering is complete, we will experiment more with making the models personalized.
-\par
 
-The ensemble experiments will have to come last in our timeline. Here we will experiment with combining the facial expression models and the
-keyboard and mouse models. We will only select some of the best models from each category and use different ensemble methods to combine them.
-\par
 
-The most significant uncertainty in our research comes from the data gathering process. Collecting labels that are representative of emotions
-is extremely difficult, if not impossible. We hope that our personalized models, regression models, and time series analysis can better use this
-labeling than previous methods. Our biggest challenge will be selecting meaningful features, whether it is by modifying our neural network models
-or analyzing the keyboard and mouse features. 
+We recorded the participants on the different channels during the whole experiment and labeled their emotions on the VAD scale \cite{VAD_model} 
+and the corresponding categorical emotions scale based on Ekman's emotions \cite{Ekman_Theory}. 
+Every single experiment took around 30 to 60 minutes. \ref{fig:exp_flow}
+In order to record and save the data from the user, 
+we used our application. While the application was recording, it collected all the inputs from the different channels - recorded events from the keyboard 
+and the mouse and took pictures of the participant with two frames per second. Every minute, 
+the application asked the user for his emotions, and the user could easily fill the form and continue the experiment \ref{fig:collection_ui}. 
+Further information about our application for data gathering is available in the appendix \ref{appendix:collection_system}
+
 \end{document}
