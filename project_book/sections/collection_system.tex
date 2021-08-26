@@ -45,7 +45,7 @@ the functionality the library provides:
         This method should not take long to execute as it runs between sessions, and taking too long could disrupt the data collection process. 
         The runtime should not exceed one second, though this is hard to verify due to users having different hardware. 
         By the end of the processing, the resulting features should be set into the \textit{self.features} object as a map of $name \rightarrow feature$.
-    \item We provide an abstraction over data preseistance in order to allow users to save the collected data in any way they choose:
+    \item We provide an abstraction over data persistence in order to allow users to save the collected data in any way they choose:
         \begin{lstlisting}[language=Python]
             class DataHandler(ABC):
 
@@ -208,28 +208,28 @@ Finally we also have a start/stop button on the top right of the window availabl
 \begin{figure}[htp]
     \centering
     \includegraphics[width=14cm]{figures/ui_home}   
-    \caption{Image of the GUI of out data collection application.}
+    \caption{Image of the home page in our data collection application.}
     \label{fig:ui_home} 
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=14cm]{figures/ui_label}   
-    \caption{Image of the GUI of out data collection application.}
+    \caption{Image of the labeling page in our data collection application.}
     \label{fig:ui_label} 
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=14cm]{figures/ui_about}   
-    \caption{Activity diagram describing the session loop in our system.}
+    \caption{Image of the about page in our data collection application.}
     \label{fig:ui_about} 
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=14cm]{figures/ui_settings}   
-    \caption{Activity diagram describing the session loop in our system.}
+    \caption{Image of the settings page in our data collection application.}
     \label{fig:ui_settings} 
 \end{figure}
 

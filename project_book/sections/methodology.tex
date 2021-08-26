@@ -6,7 +6,9 @@
     Using keyboard and mouse data posed several challenges. During the experiment, and only for the experiments, 
     we saved raw data of each of the keyboard and mouse events - for each one-second session, we saved all the events that occurred in that second. 
     In addition to the raw data, we also saved processed data. Our library processed each sequence of events within one second (a session). 
-    We can see some of the features we used here \ref{table:keyboard_mouse_features}. In addition, we also retrieved meta-information about the use of the computer, 
+    We can see some of the features we used here \ref{table:keyboard_mouse_features} 
+    and in [\ref{fig:left_click_single}, \ref{fig:left_ckick_multi}] we can see an example of the relationship between the features and the users valance. 
+    In addition, we also retrieved meta-information about the use of the computer, 
     such as the number of windows switched, main window, type of window. This information was given to every keyboard/mouse model. 
     We collected this data to help the model identify the type of activity the user is performing, which might put in context the user's usage of 
     the keyboard and mouse.
@@ -31,6 +33,22 @@
         \caption{Some of the keyboard and mouse features we used.}
         \label{table:keyboard_mouse_features}
     \end{table}
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=\textwidth]{figures/left_click_single}   
+        \caption{Here we can see that for one of the users clicking the left mouse button more corrolates to higher arousal, and lower valance.}
+        \label{fig:left_click_single} 
+    \end{figure}
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=\textwidth]{figures/left_click_multi}   
+        \caption{This plot shows valance as a function of left click count, with the different colors representing different participants.
+                 We can see that not all users have the same corrolation between valance and valance we have seen in \ref{fig:left_click_single} for most 
+                 we can see consistent trend.}
+        \label{fig:left_ckick_multi} 
+    \end{figure}
 
     When we reached the stage of building the various models, we saw that the keyboard and mouse data was relatively dirty. 
     Therefore, after conducting the experiments, we first had to search for inconsistencies and outliers and try to find their root cause to fix them. 
@@ -68,7 +86,7 @@
     Finally, we used six linodes with dedicated four-core CPUs to quickly train all these models, each training model for different 
     participants in parallel. The training process took approximately three days, with models of some participants finishing sooner and others later.
 
-
+    \newpage
 
     \subsubsection{Face}
 
