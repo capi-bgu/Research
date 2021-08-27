@@ -85,7 +85,7 @@
     \begin{figure}
         \centering
         \includegraphics[width=14cm]{figures/results/categorical_kbm}   
-        \caption{Here we can see a comparison of the the best models}
+        \caption{Here we can see a comparison of the the best classical models predicting categorical labels.}
         \label{fig:categorical_kbm} 
     \end{figure}
 
@@ -115,7 +115,7 @@
         \includegraphics[width=14cm]{figures/results/nn_acc}   
         \caption{We can see the balanced and unbalanced accuracies of all the "Emotion Net Nano" based models we trained in this plot.
         We can also see the colors separating the models into three categories, models predicting positive/negative labels, models predicting
-        categorical labels, and the general models that were trained on all the participants at once.}
+        categorical labels, and the general models (predicting categorical labels) that were trained on all the participants at once.}
         \label{fig:nn_acc} 
     \end{figure}
 
@@ -131,7 +131,8 @@
     \begin{figure}[!htp]
         \centering
         \includegraphics[width=14cm]{figures/results/nn_err}   
-        \caption{Here we can see the mean absolute and squared errors of allt he regression models, where the ensemble models are highlated in orange}
+        \caption{Here we can see the mean absolute and squared errors of all the regression models predicting VAD labels. For each model type we trained 10 models for 
+        the 10 fold cross validation, the orange highlighted 'ensemble' models are simply average regressors based on all the 10 models.}
         \label{fig:nn_err} 
     \end{figure}
 
