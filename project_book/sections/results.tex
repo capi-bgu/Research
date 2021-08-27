@@ -124,9 +124,10 @@
     On the other hand, we can also see that the general models, those trained on all the participants' data, achieve inferior results, 
     even compared to the classical models. On the other hand, we can also see that the general models, 
     those trained on all the participants' data, achieve inferior results, even compared to the classical models when trying 
-    to generalize over different people. The inability to generalize facial features is likely due to the minimal data 
-    set and our model being very small and simple in terms of trainable parameters. This is not necessarily a bad thing. 
-    We intended to create tiny and efficient models that would train on a user's computer and make predictions very easily and quickly.
+    to generalize over different people. Note that we only trained general models to predict categorical labels. Once we saw poor results these models 
+    produced we decided to not train any more general models and focus on the personal ones.
+    The inability to generalize facial features is likely due to the minimal data set and our model being very small and simple in terms of trainable parameters. 
+    This is not necessarily a bad thing. We intended to create tiny and efficient models that would train on a user's computer and make predictions very easily and quickly.
 
     \begin{figure}[!htp]
         \centering
